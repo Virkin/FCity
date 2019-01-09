@@ -13,3 +13,7 @@
 
 Route::get('/', 'PagesController@home');
 Route::get('/graph', 'PagesController@graph');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
