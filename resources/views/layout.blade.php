@@ -3,6 +3,9 @@
     <head>
         <title>@yield('title')</title>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="http://cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.js""></script>
+        
     </head>
     <body>
         
