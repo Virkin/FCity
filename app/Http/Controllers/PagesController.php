@@ -13,6 +13,17 @@ class PagesController extends Controller
 
     public function graph()
     {
-    	return view('graph');
+    
+    	if(isset($_SERVER['SERVER_ADDR']))
+    	{
+    		$ip = $_SERVER['SERVER_ADDR'];
+    	}
+    	else
+    	{
+    		$ip = "127.0.0.1";
+    	}
+    	
+
+    	return view('graph',compact('ip'));
     }
 }
