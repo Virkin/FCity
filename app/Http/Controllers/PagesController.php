@@ -11,11 +11,6 @@ class PagesController extends Controller
         $this->middleware(['auth', 'verified']);
     }
 
-    public function home()
-    {
-    	return view('home');
-    }
-
     public function graph()
     {
     

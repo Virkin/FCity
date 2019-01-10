@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', 'PagesController@home');
 Route::get('/graph', 'PagesController@graph')->name('graph');
 
 Auth::routes(['verify' => true]);
 
+Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
