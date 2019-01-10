@@ -1,7 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+
+<div class="ui raised very padded text container segment">
+  <h2 class="ui header">FCity 2</h2>
+  <p>Ceci est la page d'accueil de projet FCity 2 qui consiste à la collecte et le traitement de données provenant d'une voiture électrique. Ce projet a été réalisé dans le cadre du projet M1.</p>
+</div>
+<div class="ui container">
+    <img class="ui centered medium rounded image" src="/img/fcity.jpg">
+</div>
+
+<!-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -19,5 +28,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 @endsection
