@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'PagesController@home');
-Route::get('/graph', 'PagesController@graph');
+Route::get('/graph', 'PagesController@graph')->name('graph');
 
 Auth::routes(['verify' => true]);
 
