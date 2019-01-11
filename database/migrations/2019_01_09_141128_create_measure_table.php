@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDataTable extends Migration
+class CreateMeasureTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('data', function (Blueprint $table) {
+        Schema::create('measure', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('ride_id');
             $table->unsignedInteger('sensor_id');
-            $table->double('value');
+            $table->string('name');
+            $table->string('unit');
             $table->timestamps();
 
-            $table->foreign('ride_id')->references('id')->on('ride');
             $table->foreign('sensor_id')->references('id')->on('sensor');
         });
     }
@@ -32,6 +31,6 @@ class CreateDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('data');
+        Schema::dropIfExists('measure');
     }
 }
