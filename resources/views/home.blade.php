@@ -2,21 +2,51 @@
 
 @section('content')
 
-<div class="ui very padded segment fluid" style="background-image:url('/img/background-home-fhd.jpg'); background-size:cover; background-position: center bottom; height:100vh; margin:0">
-  <div class="ui container" style="margin-top: 10%;">
-    <h1 class="ui header centered">Réservez votre voiture électrique dès maintenant</h2>
-    <p class="text-center">L'ISEN Brest met à disposition des enseignants un véhicule 100% électrique pour effectuer des trajets au alentour de Brest. Ceci est la page d'accueil de projet FCity 2 qui consiste à la collecte et le traitement de données provenant d'une voiture électrique. Ce projet a été réalisé dans le cadre du projet M1.</p>
-    <div class="text-center">
-      <button type="button" class="btn btn-lg btn-primary">Réservez maintenant</button>
+<header>
+  <div class="ui very padded segment fluid" id="header-img">
+    <div class="ui container" id="header-text">
+      <h1 class="ui header centered">Réservez gratuitement votre voiture électrique dès maintenant</h2>
+      <p class="text-center">L'ISEN Brest met à disposition des enseignants un véhicule 100% électrique connecté pour effectuer des trajets au alentour de Brest.</p>
+      <div class="text-center">
+        <button type="button" class="btn btn-lg btn-primary">Réservez maintenant</button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="ui container">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Conduire gratuitement un véhicule électrique connecté</h2>
+      <p>Le véhicule FCity est constitué de nombreux capteurs (vitesse, accélération, tension des batteries, luminosité...) afin d'améliorer votre conduite, garantir votre sécurité et réduire votre consommation électrique.</p>
+      </div>
+    <div class="col-md-6">
+      <img class="ui centered medium rounded image" src="/img/fcity.jpg">
     </div>
   </div>
 </div>
 <div class="ui container">
-  <h2>Conduire gratuitement une voiture électrique</h2>
-  <p>Conduire gratuitement la voiture électrique de l'ISEN Brest</p>
-  <img class="ui centered medium rounded image" src="/img/fcity.jpg">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Analyser votre conduite en temps réel</h2>
+      <p>Les données recueillies par le véhicule sont transmises vers le serveur de l'ISEN Brest afin que puissiez les analyser et les comparer.</p>
+      </div>
+    <div class="col-md-6">
+      <img class="ui centered medium rounded image" src="/img/fcity.jpg">
+    </div>
+  </div>
 </div>
-
+<div class="ui container">
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Participer au classement des meilleurs conducteurs</h2>
+      <p>L'ISEN Brest propose aux enseignants un classement des conducteurs les plus économe en énergie.</p>
+      </div>
+    <div class="col-md-6">
+      <img class="ui centered medium rounded image" src="/img/fcity.jpg">
+    </div>
+  </div>
+</div>
+<div class="ui container">
 
 <!-- <div class="container">
     <div class="row justify-content-center">

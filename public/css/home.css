@@ -1,0 +1,11 @@
+#header-img {
+  background-image: url("../img/background-home-fhd.jpg");
+  background-size: cover;
+  background-position: center bottom;
+  height: 100vh;
+  margin: 0;
+}
+
+#header-text {
+  margin-top: 10%;
+}
