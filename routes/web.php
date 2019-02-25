@@ -11,6 +11,7 @@
 |
 */
 
+Route::get('/reservation/{user_id}', 'PagesController@ride')->name('ride');
 Route::get('/graph', 'PagesController@graph')->name('graph');
 
 Auth::routes(['verify' => true]);

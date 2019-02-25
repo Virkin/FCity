@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Ride;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\User;
+use DB;
 
 class PagesController extends Controller
 {
@@ -24,6 +27,13 @@ class PagesController extends Controller
     	}
     	
 
-    	return view('graph',compact('ip'));
+    	return view('graph', compact('ip'));
+    }
+
+    public function ride($user_id)
+    {
+        $columns = DB::getSchemaBuilder()->getColumnListing('ride');
+        $ride = Ride::where('user_id', $user_id)->get();
+        return view('reservation', compact('ride', 'columns'));
     }
 }
