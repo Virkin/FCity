@@ -8,7 +8,11 @@
       <h1 class="ui header centered">Réservez gratuitement votre voiture électrique dès maintenant</h2>
       <p class="text-center">L'ISEN Brest met à disposition des enseignants un véhicule 100% électrique connecté pour effectuer des trajets au alentour de Brest.</p>
       <div class="text-center">
-        <a class="btn btn-lg btn-primary" href="{{ route('ride', Auth::user()->id) }}" role="button">Réservez maintenant</a>
+        @guest
+          <a class="btn btn-lg btn-primary" href="{{ route('login') }}" role="button">Réservez maintenant</a>
+        @else
+          <a class="btn btn-lg btn-primary" href="{{ route('ride', Auth::user()->id) }}" role="button">Réservez maintenant</a>
+        @endguest
       </div>
     </div>
   </div>
