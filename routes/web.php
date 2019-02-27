@@ -11,10 +11,11 @@
 |
 */
 
-Route::get('/reservation/{user_id}', 'PagesController@ride')->name('ride');
+//Route::get('/reservation/{user_id}', 'PagesController@ride')->name('ride');
 Route::get('/graph', 'PagesController@graph')->name('graph');
 
 Auth::routes(['verify' => true]);
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('reservation', 'ReservationController');
