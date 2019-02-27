@@ -55,7 +55,7 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('ride', Auth::user()->id) }}">{{ __('Reservation') }}</a>
+                                <a class="nav-link" href="/reservation">{{ __('Reservation') }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('graph') }}">{{ __('Graph') }}</a>

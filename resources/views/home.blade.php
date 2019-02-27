@@ -11,7 +11,7 @@
         @guest
           <a class="btn btn-lg btn-primary" href="{{ route('login') }}" role="button">Réservez maintenant</a>
         @else
-          <a class="btn btn-lg btn-primary" href="{{ route('ride', Auth::user()->id) }}" role="button">Réservez maintenant</a>
+          <a class="btn btn-lg btn-primary" href="/reservation" role="button">Réservez maintenant</a>
         @endguest
       </div>
     </div>
