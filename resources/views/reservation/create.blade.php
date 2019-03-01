@@ -50,10 +50,10 @@
       <input type="hidden" class="form-control" name="end_reservation" value="@if(isset($datetime)){{$datetime['end_reservation']}}@endif"/>
     </div>
     <div class="form-group">
-      <input type="hidden" class="form-control" name="start_date" value="@if(isset($datetime)){{$datetime['start_reservation']}}@endif"/>
+      <input type="hidden" class="form-control" name="start_date"/>
     </div>
     <div class="form-group">
-      <input type="hidden" class="form-control" name="end_date" value="@if(isset($datetime)){{$datetime['end_reservation']}}@endif"/>
+      <input type="hidden" class="form-control" name="end_date"/>
     </div>
     <button type="submit" class="btn btn-primary">Réserver</button>
   </form>

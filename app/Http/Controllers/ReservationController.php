@@ -104,9 +104,9 @@ class ReservationController extends Controller
      */
     public function show(Ride $reservation)
     {
-        $columns = ['id', 'name', 'model', 'brand', 'type', 'start_reservation', 'end_reservation'];
+        $columns = ['id', 'name', 'model', 'brand', 'type', 'start_reservation', 'end_reservation', 'start_date', 'end_date'];
 
-        $ride = DB::select("SELECT r.id, u.name, v.model, v.brand, v.type, r.start_reservation, r.end_reservation
+        $ride = DB::select("SELECT r.id, u.name, v.model, v.brand, v.type, r.start_reservation, r.end_reservation, r.start_date, r.end_date
                             FROM ride AS r
                             JOIN users AS u ON u.id = r.user_id
                             JOIN vehicle AS v ON v.id = r.vehicle_id
