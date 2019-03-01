@@ -17,10 +17,10 @@ class CreateRideTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('vehicle_id');
-            $table->dateTime('start_reservation');
-            $table->dateTime('end_reservation');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->dateTime('start_reservation')->nullable();
+            $table->dateTime('end_reservation')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

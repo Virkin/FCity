@@ -13,6 +13,7 @@
 
 //Route::get('/reservation/{user_id}', 'PagesController@ride')->name('ride');
 Route::get('/graph', 'PagesController@graph')->name('graph');
+Route::get('/ranking', 'PagesController@ranking')->name('ranking');
 
 Auth::routes(['verify' => true]);
 

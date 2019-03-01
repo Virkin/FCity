@@ -57,7 +57,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Réserver</button>
   </form>
-  @else
+  @elseif(isset($datetime))
   <div class="alert alert-danger text-center" role="alert">
     Veuillez choisir un autre créneau, aucune voiture n'est diponible !
   </div>
