@@ -12,8 +12,8 @@
         @foreach ($columns as $column => $name)
           <th scope="col">{{$name}}</th>
         @endforeach
+        <th>Détails</th>
         <th>Modifier</th>
-        <th>Supprimer</th>
       </tr>
     </thead>
     <tbody>
@@ -22,7 +22,8 @@
         @foreach ($columns as $column => $name)
           <td>{{ $ride[$i]->$name }}</td>
         @endforeach
-        <td><a href="/reservation">Modifier</a></td>
+        <td style="padding:0"><a class="btn btn-lg btn-outline-primary btn-block" href="/reservation/{{ $ride[$i]->id }}" role="button">Détails</a></td>
+        <td style="padding:0"><a class="btn btn-lg btn-outline-primary btn-block" href="/reservation/{{ $ride[$i]->id }}/edit" role="button">Modifier</a></td>
       </tr>
       @endfor
     </tbody>

@@ -15,9 +15,9 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $columns = ['id', 'name', 'model', 'brand', 'start_reservation', 'end_reservation'];
+        $columns = ['id', 'name', 'model', 'brand', 'type', 'start_reservation', 'end_reservation'];
 
-        $ride = DB::select("SELECT r.id, u.name, v.model, v.brand, r.start_reservation, r.end_reservation
+        $ride = DB::select("SELECT r.id, u.name, v.model, v.brand, v.type, r.start_reservation, r.end_reservation
                             FROM ride AS r
                             JOIN users AS u ON u.id = r.user_id
                             JOIN vehicle AS v ON v.id = r.vehicle_id
@@ -102,9 +102,17 @@ class ReservationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Ride $reservation)
     {
-        //
+        $columns = ['id', 'name', 'model', 'brand', 'type', 'start_reservation', 'end_reservation'];
+
+        $ride = DB::select("SELECT r.id, u.name, v.model, v.brand, v.type, r.start_reservation, r.end_reservation
+                            FROM ride AS r
+                            JOIN users AS u ON u.id = r.user_id
+                            JOIN vehicle AS v ON v.id = r.vehicle_id
+                            WHERE r.id = '$reservation->id'");
+
+        return view('reservation.show', compact('ride', 'columns'));
     }
 
     /**
