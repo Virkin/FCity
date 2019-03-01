@@ -56,15 +56,14 @@ class ReservationController extends Controller
                 'end_reservation_time' => request('end_reservation_time')
             ];
 
-            $ride = DB::select("SELECT r.vehicle_id, v.brand, v.model, v.type
-                                FROM ride AS r
-                                JOIN vehicle AS v ON r.vehicle_id = v.id
-                                WHERE r.vehicle_id NOT IN
+            $ride = DB::select("SELECT v.id, v.brand, v.model, v.type
+                                FROM vehicle AS v
+                                LEFT JOIN ride AS r ON r.vehicle_id = v.id
+                                WHERE v.id NOT IN
                                 (SELECT r.vehicle_id
                                 FROM ride AS r
                                 WHERE r.start_reservation BETWEEN '$start_reservation' AND '$end_reservation' 
-                                OR '$start_reservation' BETWEEN r.start_reservation AND r.end_reservation)
-                                GROUP BY r.vehicle_id");
+                                OR '$start_reservation' BETWEEN r.start_reservation AND r.end_reservation)");
             if ($ride == [])
             {
                 return view('reservation.create', compact('datetime'));

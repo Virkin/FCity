@@ -39,7 +39,7 @@
       <label for="brand">Véhicule :</label>
       <select class="form-control" name="vehicle_id">
         @foreach($ride as $r)
-          <option value="{{ $r->vehicle_id }}">{{ $r->brand }} {{ $r->model }} ({{ $r->type }})</option>
+          <option value="{{ $r->id }}">{{ $r->brand }} {{ $r->model }} ({{ $r->type }})</option>
         @endforeach
       </select>
     </div>
