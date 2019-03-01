@@ -63,7 +63,8 @@ class ReservationController extends Controller
                                 (SELECT r.vehicle_id
                                 FROM ride AS r
                                 WHERE r.start_reservation BETWEEN '$start_reservation' AND '$end_reservation' 
-                                OR '$start_reservation' BETWEEN r.start_reservation AND r.end_reservation)");
+                                OR '$start_reservation' BETWEEN r.start_reservation AND r.end_reservation)
+                                GROUP BY v.id");
             if ($ride == [])
             {
                 return view('reservation.create', compact('datetime'));
