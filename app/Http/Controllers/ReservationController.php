@@ -16,7 +16,13 @@ class ReservationController extends Controller
     public function index()
     {
         $columns = ['id', 'name', 'model', 'brand', 'start_reservation', 'end_reservation'];
-        $ride = DB::select('SELECT r.id, u.name, v.model, v.brand, r.start_reservation, r.end_reservation FROM ride AS r JOIN users AS u ON u.id = r.user_id JOIN vehicle AS v ON v.id = r.vehicle_id');
+
+        $ride = DB::select("SELECT r.id, u.name, v.model, v.brand, r.start_reservation, r.end_reservation
+                            FROM ride AS r
+                            JOIN users AS u ON u.id = r.user_id
+                            JOIN vehicle AS v ON v.id = r.vehicle_id
+                            ORDER BY r.id");
+
         return view('reservation.index', compact('ride', 'columns'));
     }
 
@@ -27,9 +33,47 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        //$vehicle = DB::select();
-        $ride = DB::select('SELECT r.id, u.name, v.model, v.brand, r.start_reservation, r.end_reservation FROM ride AS r JOIN users AS u ON u.id = r.user_id JOIN vehicle AS v ON v.id = r.vehicle_id');
-        return view('reservation.create', compact('ride'));
+        return view('reservation.create');
+    }
+
+    public function date(Request $request)
+    {
+        $start_reservation = request('start_reservation_date') . ' ' . request('start_reservation_time');
+        $end_reservation = request('end_reservation_date') . ' ' . request('end_reservation_time');
+
+        if ($end_reservation < $start_reservation)
+        {
+            return view('reservation.create', compact('datetime'));
+        }
+        else
+        {
+            $datetime = [
+                'start_reservation' => $start_reservation,
+                'end_reservation' => $end_reservation,
+                'start_reservation_date' => request('start_reservation_date'),
+                'start_reservation_time' => request('start_reservation_time'),
+                'end_reservation_date' => request('end_reservation_date'),
+                'end_reservation_time' => request('end_reservation_time')
+            ];
+
+            $ride = DB::select("SELECT r.vehicle_id, v.brand, v.model, v.type
+                                FROM ride AS r
+                                JOIN vehicle AS v ON r.vehicle_id = v.id
+                                WHERE r.vehicle_id NOT IN
+                                (SELECT r.vehicle_id
+                                FROM ride AS r
+                                WHERE r.start_reservation BETWEEN '$start_reservation' AND '$end_reservation' 
+                                OR '$start_reservation' BETWEEN r.start_reservation AND r.end_reservation)
+                                GROUP BY r.vehicle_id");
+            if ($ride == [])
+            {
+                return view('reservation.create', compact('datetime'));
+            }
+            else
+            {
+                return view('reservation.create', compact('ride', 'datetime'));
+            }
+        }
     }
 
     /**
@@ -41,7 +85,6 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         Ride::create([
-            'id' => request('id'),
             'user_id' => request('user_id'),
             'vehicle_id' => request('vehicle_id'),
             'start_reservation' => request('start_reservation'),

@@ -19,3 +19,4 @@ Auth::routes(['verify' => true]);
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('reservation', 'ReservationController');
+Route::post('/reservationDate', 'ReservationController@date')->name('reservation.date');
