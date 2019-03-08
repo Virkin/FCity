@@ -25,9 +25,55 @@ class PagesController extends Controller
     	{
     		$ip = "127.0.0.1";
     	}
+        
+        $speedValues = DB::select("SELECT value from data as d join ride as r on d.ride_id=r.id 
+        where NOW() BETWEEN r.start_reservation and r.end_reservation    and d.measure_id=1");
+
+        $value = array();
+        $xLabel = array();
+        $i = 0;
+
+        foreach($speedValues as $speedValue)
+        {
+            array_push($xLabel,$i);
+            array_push($value, $speedValue->value);
+            $i++;
+        }
+
+        $chartjs = app()->chartjs
+            ->name('lineChartTest')
+            ->type('line')
+            ->size(['width' => 400, 'height' => 200])
+            ->labels($xLabel)
+            ->datasets([
+                [
+                    "label" => "Speed",
+                    'backgroundColor' => "rgba(38, 185, 154, 0.31)",
+                    'borderColor' => "rgba(38, 185, 154, 0.7)",
+                    "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
+                    "pointBackgroundColor" => "rgba(38, 185, 154, 0.7)",
+                    "pointHoverBackgroundColor" => "#fff",
+                    "pointHoverBorderColor" => "rgba(220,220,220,1)",
+                    'data' => $value,
+                ],
+            ])
+            ->options([]);
+
+        $chartjs->optionsRaw("{
+            scales: {
+                xAxes: [{
+                    gridLines : {
+                        display : false
+                    }, 
+                    ticks: {
+                        display:false
+                    } 
+                }]
+            }
+        }");
     	
 
-    	return view('graph', compact('ip'));
+    	return view('graph', compact('chartjs','ip'));
     }
 
     /*public function ride($user_id)

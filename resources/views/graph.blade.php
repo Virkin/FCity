@@ -4,7 +4,8 @@
 
 @section('content')
 	<div class="ui container" id="header-text">
-		<iframe src="http://{{ $ip }}:3000/d-solo/DP6VyGPmk/fcity2?refresh=30s&orgId=1&var-capteur=vitesse&var-utilisateur=Antoine&var-trajet=All&panelId=2&theme=light" width="100%" height="300" frameborder="0"></iframe>
+		{!! $chartjs->render() !!}
+		<!-- <iframe src="http://{{ $ip }}:3000/d-solo/DP6VyGPmk/fcity2?refresh=30s&orgId=1&var-capteur=vitesse&var-utilisateur=Antoine&var-trajet=All&panelId=2&theme=light" width="100%" height="300" frameborder="0"></iframe> -->
 	</div>
 	<div class="ui two column doubling stackable grid container">
 		<div class="column">
