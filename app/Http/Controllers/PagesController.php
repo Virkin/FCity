@@ -26,7 +26,7 @@ class PagesController extends Controller
     		$ip = "127.0.0.1";
     	}
         
-        $speedValues = DB::select("SELECT value from data as d join ride as r on d.ride_id=r.id 
+        $speedValues = DB::select("SELECT value, added_on from data as d join ride as r on d.ride_id=r.id 
         where NOW() BETWEEN r.start_reservation and r.end_reservation    and d.measure_id=1");
 
         $value = array();
@@ -35,13 +35,13 @@ class PagesController extends Controller
 
         foreach($speedValues as $speedValue)
         {
-            array_push($xLabel,$i);
+            array_push($xLabel,$speedValue->added_on);
             array_push($value, $speedValue->value);
             $i++;
         }
 
-        $chartjs = app()->chartjs
-            ->name('lineChartTest')
+        $speedChart = app()->chartjs
+            ->name('speedChart')
             ->type('line')
             ->size(['width' => 400, 'height' => 200])
             ->labels($xLabel)
@@ -59,7 +59,58 @@ class PagesController extends Controller
             ])
             ->options([]);
 
-        $chartjs->optionsRaw("{
+        $speedChart->optionsRaw("{
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        unit: 'hour',
+                        stepSize: 0.25,
+                        displayFormats: {
+                            'hour': 'HH:mm',
+                        }
+                    }
+                }]
+            },
+            animation: {
+                duration: 0
+            }
+        }");
+
+        $voltageValues = DB::select("SELECT value from data as d join ride as r on d.ride_id=r.id 
+        where NOW() BETWEEN r.start_reservation and r.end_reservation and d.measure_id=2");
+
+        $value = array();
+        $xLabel = array();
+        $i = 0;
+
+        foreach($voltageValues as $voltageValue)
+        {
+            array_push($xLabel,$i);
+            array_push($value, $voltageValue->value);
+            $i++;
+        }
+
+        $voltageChart = app()->chartjs
+            ->name('voltageChart')
+            ->type('line')
+            ->size(['width' => 200, 'height' => 200])
+            ->labels($xLabel)
+            ->datasets([
+                [
+                    "label" => "Voltage",
+                    'backgroundColor' => "rgba(38, 185, 154, 0.31)",
+                    'borderColor' => "rgba(38, 185, 154, 0.7)",
+                    "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
+                    "pointBackgroundColor" => "rgba(38, 185, 154, 0.7)",
+                    "pointHoverBackgroundColor" => "#fff",
+                    "pointHoverBorderColor" => "rgba(220,220,220,1)",
+                    'data' => $value,
+                ],
+            ])
+            ->options([]);
+
+        $voltageChart->optionsRaw("{
             scales: {
                 xAxes: [{
                     gridLines : {
@@ -69,11 +120,13 @@ class PagesController extends Controller
                         display:false
                     } 
                 }]
+            },
+            animation: {
+                duration: 0
             }
         }");
-    	
 
-    	return view('graph', compact('chartjs','ip'));
+    	return view('graph', compact('speedChart','voltageChart','ip'));
     }
 
     /*public function ride($user_id)
