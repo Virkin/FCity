@@ -9,16 +9,16 @@
 	      	<tr>
 	        	<th>Rank</th>
 	        	<th>Name</th>
-	        	<th>V/KM</th>
+	        	<th>W/H</th>
 	      	</tr>
     	</thead>
     	<tbody>
 	    @php ($i = 0)
-	    @foreach($ranking as $rank)
+	    @foreach($ranking as $name=>$value)
 			<tr>
 				<td>{{++$i}}</td>
-				<td> {{$rank->name}} </td>
-				<td> {{$rank->score}} </td>
+				<td> {{$name}} </td>
+				<td> {{$value}} </td>
 			</tr>
          @endforeach
     	</tbody>

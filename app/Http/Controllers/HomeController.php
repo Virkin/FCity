@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Middleware\EnsureEmailIsVerified;
 use DB;
+use DateTime;
 
 class HomeController extends Controller
 {
@@ -29,6 +30,56 @@ class HomeController extends Controller
     }
 
     public function ranking()
+    {
+        $ranking = array();
+        $users = DB::select("SELECT id,name FROM users"); 
+        
+        foreach ($users as $user) 
+        {
+            $rides = DB::select("SELECT r.id FROM ride as r join data as d on d.ride_id=r.id WHERE r.user_id='$user->id' GROUP BY r.id");
+
+            foreach($rides as $ride)
+            {
+                $powerGlobal = DB::select("
+                    SELECT EXP(SUM(LN(value))) as value, d.added_on as date 
+                    FROM data as d 
+                    JOIN measure as m ON m.id=d.measure_id 
+                    WHERE ( m.name='voltage' or m.name='intensity' ) and d.ride_id='$ride->id' 
+                    GROUP BY d.added_on 
+                    ORDER BY d.added_on ASC ");
+
+                $power = $powerGlobal[0]->value;
+                $date = new DateTime($powerGlobal[0]->date);
+
+                $energyPulse = 0;
+
+                foreach($powerGlobal as $powerPulse)
+                {
+                    $nextDate = new DateTime($powerPulse->date);
+
+                    $step = ($nextDate->diff($date)->s)/3600;
+
+                    $energyPulse += (($powerPulse->value + $power)*($step))/2;
+
+                    $power = $powerPulse->value;
+                    
+                    $date = $nextDate;            
+                }
+
+                $firstDate = new DateTime($powerGlobal[0]->date);
+
+                $totalTime = ($date->diff($firstDate)->s)/3600;
+
+                $averagePower = $energyPulse/$totalTime;
+
+                $ranking[$user->name] = $averagePower;
+            }
+        }
+
+        return view('ranking',compact('ranking'));
+    }
+
+    public function old_ranking()
     {
         $ranking = DB::select(" 
             SELECT u.name as name, round(avg(dataAvg.avgRide),2) as score
@@ -59,7 +110,7 @@ class HomeController extends Controller
             JOIN users as u on r.user_id=u.id 
             GROUP BY r.user_id
             ORDER BY score");
-        
+
         return view('ranking',compact('ranking'));
     }
 }
