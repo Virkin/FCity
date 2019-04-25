@@ -29,54 +29,149 @@ class HomeController extends Controller
         return view('home');
     }
 
-    public function ranking()
+    public function ranking(Request $request)
     {
-        $ranking = array();
-        $users = DB::select("SELECT id,name FROM users"); 
-        
-        foreach ($users as $user) 
+        if(isset($request->rankType))
         {
-            $rides = DB::select("SELECT r.id FROM ride as r join data as d on d.ride_id=r.id WHERE r.user_id='$user->id' GROUP BY r.id");
+            $type = $request->rankType;
 
-            foreach($rides as $ride)
+            if($type == "user")
             {
-                $powerGlobal = DB::select("
-                    SELECT EXP(SUM(LN(value))) as value, d.added_on as date 
-                    FROM data as d 
-                    JOIN measure as m ON m.id=d.measure_id 
-                    WHERE ( m.name='voltage' or m.name='intensity' ) and d.ride_id='$ride->id' 
-                    GROUP BY d.added_on 
-                    ORDER BY d.added_on ASC ");
-
-                $power = $powerGlobal[0]->value;
-                $date = new DateTime($powerGlobal[0]->date);
-
-                $energyPulse = 0;
-
-                foreach($powerGlobal as $powerPulse)
+                $ranking = array();
+                $users = DB::select("SELECT id,nickname FROM users"); 
+                
+                foreach ($users as $user) 
                 {
-                    $nextDate = new DateTime($powerPulse->date);
+                    $ranking[$user->nickname] = 0; 
 
-                    $step = ($nextDate->diff($date)->s)/3600;
+                    $rides = DB::select("SELECT r.id FROM ride as r join data as d on d.ride_id=r.id WHERE r.user_id='$user->id' GROUP BY r.id");
 
-                    $energyPulse += (($powerPulse->value + $power)*($step))/2;
+                    $i = 0;
 
-                    $power = $powerPulse->value;
-                    
-                    $date = $nextDate;            
+                    foreach($rides as $ride)
+                    {
+                        
+                        $powerGlobal = DB::select("
+                            SELECT EXP(SUM(LN(value))) as value, d.added_on as date 
+                            FROM data as d 
+                            JOIN measure as m ON m.id=d.measure_id 
+                            WHERE ( m.name='Voltage' or m.name='Intensity' ) and d.ride_id='$ride->id' 
+                            GROUP BY d.added_on 
+                            ORDER BY d.added_on ASC ");
+
+                        $power = $powerGlobal[0]->value;
+                        $date = new DateTime($powerGlobal[0]->date);
+
+                        $energyPulse = 0;
+
+                        foreach($powerGlobal as $powerPulse)
+                        {
+                            $nextDate = new DateTime($powerPulse->date);
+
+                            $step = ($nextDate->diff($date)->s)/3600;
+
+                            $energyPulse += (($powerPulse->value + $power)*($step))/2;
+
+                            $power = $powerPulse->value;
+                            
+                            $date = $nextDate;            
+                        }
+
+                        $firstDate = new DateTime($powerGlobal[0]->date);
+
+                        $totalTime = ($date->diff($firstDate)->s)/3600;
+
+                        $averagePower = $energyPulse/$totalTime;
+
+                        $ranking[$user->nickname] += $averagePower;
+
+                        $i++;
+                    }
+
+                    $ranking[$user->nickname] = $ranking[$user->nickname]/$i;
                 }
 
-                $firstDate = new DateTime($powerGlobal[0]->date);
+                asort($ranking);
 
-                $totalTime = ($date->diff($firstDate)->s)/3600;
+                return view('ranking',compact('ranking'));
+            }
 
-                $averagePower = $energyPulse/$totalTime;
+            else if($type =="ride")
+            {
+                $ranking = array();
+                
+                $rides = DB::select("SELECT r.id as id, u.nickname as nickname FROM ride as r join data as d on d.ride_id=r.id join users as u on u.id=r.user_id group by r.id");
 
-                $ranking[$user->name] = $averagePower;
+                $i=0;
+
+                foreach($rides as $ride)
+                {
+                    $powerGlobal = DB::select("
+                        SELECT EXP(SUM(LN(value))) as value, d.added_on as date 
+                        FROM data as d 
+                        JOIN measure as m ON m.id=d.measure_id 
+                        WHERE ( m.name='Voltage' or m.name='Intensity' ) and d.ride_id='$ride->id' 
+                        GROUP BY d.added_on 
+                        ORDER BY d.added_on ASC ");
+
+                    $power = $powerGlobal[0]->value;
+                    $date = new DateTime($powerGlobal[0]->date);
+
+                    $energyPulse = 0;
+
+                    foreach($powerGlobal as $powerPulse)
+                    {
+                        $nextDate = new DateTime($powerPulse->date);
+
+                        $step = ($nextDate->diff($date)->s)/3600;
+
+                        $energyPulse += (($powerPulse->value + $power)*($step))/2;
+
+                        $power = $powerPulse->value;
+                        
+                        $date = $nextDate;            
+                    }
+
+                    $firstDate = new DateTime($powerGlobal[0]->date);
+
+                    $totalTime = ($date->diff($firstDate)->s)/3600;
+
+                    $averagePower = $energyPulse/$totalTime;
+
+                    $ranking[$i] = array("nickname"=>$ride->nickname, "score"=>$averagePower);
+
+                    $i++;
+                }
+                
+                $n = count($ranking);
+                
+                while($n > 1)
+                {
+                    $newn = 0;
+                    
+                    for($i=1; $i<=$n-1; $i++)
+                    {
+                        if($ranking[$i-1]["score"] > $ranking[$i]["score"])
+                        {
+                            $temp = $ranking[$i-1];
+                            $ranking[$i-1] = $ranking[$i];
+                            $ranking[$i] = $temp;
+                            $newn=$i;
+                        }
+                    }
+        
+                    $n = $newn;
+                }
+
+                return view('ranking',compact('ranking'));
             }
         }
 
-        return view('ranking',compact('ranking'));
+        else
+        {
+            return view('ranking');
+        }
+
     }
 
     public function old_ranking()

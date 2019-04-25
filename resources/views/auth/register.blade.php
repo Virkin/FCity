@@ -12,14 +12,14 @@
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+                            <label for="nickname" class="col-md-4 col-form-label text-md-right">{{ __('Nickname') }}</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="nickname" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="nickname" value="{{ old('nickname') }}" required autofocus>
 
-                                @if ($errors->has('name'))
+                                @if ($errors->has('nickname'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('nickname') }}</strong>
                                     </span>
                                 @endif
                             </div>
@@ -61,6 +61,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="badgeId" class="col-md-4 col-form-label text-md-right">{{ __('Badge ID') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="badgeId" type="text" class="form-control{{ $errors->has('badgeId') ? ' is-invalid' : '' }}" name="badgeId" value="{{ old('badgeId') }}" required>
+
+                                @if ($errors->has('badgeId'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('badgeId') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -68,6 +82,7 @@
                                 </button>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>

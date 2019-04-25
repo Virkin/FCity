@@ -18,6 +18,8 @@ class CreateVehicleTable extends Migration
             $table->string('brand');
             $table->string('model');
             $table->string('type');
+            $table->string('numberPlate');
+            $table->unique('numberPlate');
             $table->timestamps();
         });
     }
