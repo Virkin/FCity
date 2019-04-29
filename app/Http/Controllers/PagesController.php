@@ -48,7 +48,8 @@ class PagesController extends Controller
             ->datasets([
                 [
                     "label" => "Speed",
-                    "lineTension" => 0, 
+                    "lineTension" => 0,
+                    //"pointRadius" => 0, 
                     'backgroundColor' => "rgba(38, 185, 154, 0.31)",
                     'borderColor' => "rgba(38, 185, 154, 0.7)",
                     "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
