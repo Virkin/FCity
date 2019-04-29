@@ -38,7 +38,7 @@ class HomeController extends Controller
             if($type == "user")
             {
                 $ranking = array();
-                $users = DB::select("SELECT id,nickname FROM users"); 
+                $users = DB::select("SELECT u.id, u.nickname FROM users as u JOIN ride as r on u.id=r.user_id"); 
                 
                 foreach ($users as $user) 
                 {
