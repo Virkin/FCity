@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Ride;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Input;
 use DB;
+use Auth;
 
 class PagesController extends Controller
 {
@@ -17,27 +19,69 @@ class PagesController extends Controller
     public function graph()
     {
 
-        if(isset($_SERVER['SERVER_ADDR']))
-    	{
-    		$ip = $_SERVER['SERVER_ADDR'];
-    	}
-    	else
-    	{
-    		$ip = "127.0.0.1";
-    	}
+        $user = Auth::user();
         
-        $speedValues = DB::select("SELECT value, added_on from data as d join ride as r on d.ride_id=r.id 
-        where NOW() BETWEEN r.start_reservation and r.end_reservation    and d.measure_id=1");
+        $userRide = DB::select("SELECT id, start_reservation from ride where user_id=$user->id");
+
+        if (Input::get('ride') !== null)
+        {
+            $ride_id = Input::get('ride');
+            $measure_name = Input::get('chartType');
+
+            if($measure_name == "puiss")
+            {
+                $req = "SELECT EXP(SUM(LN(value))) as value, d.added_on as added_on
+                            FROM data as d 
+                            JOIN measure as m ON m.id=d.measure_id 
+                            WHERE ( m.name='Voltage' or m.name='Intensity' ) and d.ride_id='$ride_id' 
+                            GROUP BY d.added_on 
+                            ORDER BY d.added_on ASC";
+            }
+            else
+            {
+                $req = "SELECT value, added_on from data as d join ride as r on d.ride_id=r.id where r.id=$ride_id and d.measure_id=1";
+            }
+        }
+        else
+        {
+            $req = "SELECT value, added_on from data as d join ride as r on d.ride_id=r.id where now() between r.start_reservation and r.end_reservation and d.measure_id=1";
+        }
+
+        $speedValues = DB::select($req);
 
         $value = array();
         $xLabel = array();
-        $i = 0;
+        
+        $i = 1;
+
+        $step = 10;
 
         foreach($speedValues as $speedValue)
         {
-            array_push($xLabel,$speedValue->added_on);
-            array_push($value, $speedValue->value);
-            $i++;
+            if($i < $step)
+            {
+                if($i == $step/2)
+                {
+                    $date = $speedValue->added_on;
+                }
+
+                if(isset($avg))
+                {
+                    $avg = ($avg+$speedValue->value)/2;
+                }
+                else
+                {
+                    $avg = $speedValue->value;
+                }
+
+                $i++;
+            }
+            else
+            {
+                array_push($xLabel, $date);
+                array_push($value, $avg);
+                $i=1;
+            }
         }
 
         $speedChart = app()->chartjs
@@ -49,7 +93,7 @@ class PagesController extends Controller
                 [
                     "label" => "Speed",
                     "lineTension" => 0,
-                    //"pointRadius" => 0, 
+                    #"pointRadius" => 0, 
                     'backgroundColor' => "rgba(38, 185, 154, 0.31)",
                     'borderColor' => "rgba(38, 185, 154, 0.7)",
                     "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
@@ -79,56 +123,14 @@ class PagesController extends Controller
             }
         }");
 
-        $voltageValues = DB::select("SELECT value from data as d join ride as r on d.ride_id=r.id 
-        where NOW() BETWEEN r.start_reservation and r.end_reservation and d.measure_id=2");
-
-        $value = array();
-        $xLabel = array();
-        $i = 0;
-
-        foreach($voltageValues as $voltageValue)
+        if (Input::get('ride') !== null)
         {
-            array_push($xLabel,$i);
-            array_push($value, $voltageValue->value);
-            $i++;
+            return view('graph', compact('speedChart','userRide','ride_id', 'measure_name'));
         }
-
-        $voltageChart = app()->chartjs
-            ->name('voltageChart')
-            ->type('line')
-            ->size(['width' => 200, 'height' => 200])
-            ->labels($xLabel)
-            ->datasets([
-                [
-                    "label" => "Voltage",
-                    'backgroundColor' => "rgba(38, 185, 154, 0.31)",
-                    'borderColor' => "rgba(38, 185, 154, 0.7)",
-                    "pointBorderColor" => "rgba(38, 185, 154, 0.7)",
-                    "pointBackgroundColor" => "rgba(38, 185, 154, 0.7)",
-                    "pointHoverBackgroundColor" => "#fff",
-                    "pointHoverBorderColor" => "rgba(220,220,220,1)",
-                    'data' => $value,
-                ],
-            ])
-            ->options([]);
-
-        $voltageChart->optionsRaw("{
-            scales: {
-                xAxes: [{
-                    gridLines : {
-                        display : false
-                    }, 
-                    ticks: {
-                        display:false
-                    } 
-                }]
-            },
-            animation: {
-                duration: 0
-            }
-        }");
-
-    	return view('graph', compact('speedChart','voltageChart','ip'));
+        else
+        {
+            return view('graph', compact('speedChart','userRide'));
+        }
     }
 
     /*public function ride($user_id)
