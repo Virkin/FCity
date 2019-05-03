@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Ride;
 use DB;
 
@@ -149,23 +150,28 @@ class ReservationController extends Controller
     {
         $ride = Ride::find($id);
 
-        $user_id = $ride["user_id"];
-        $start_reservation = $ride["start_reservation"];
-        $end_reservation = $ride["end_reservation"];
+        if (Input::get("start_reservation_date") !== null)
+        {
 
-        list($start_reservation_date, $start_reservation_time) = explode(' ', $start_reservation);
-        list($end_reservation_date, $end_reservation_time) = explode(' ', $end_reservation);
+            $start_reservation = Input::get("start_reservation_date").' '.Input::get("start_reservation_time");
+            $end_reservation = Input::get("end_reservation_date").' '.Input::get("end_reservation_time");
+            $start_reservation_date = Input::get("start_reservation_date");
+            $start_reservation_time = Input::get("start_reservation_time");
+            $end_reservation_date = Input::get("end_reservation_date");
+            $end_reservation_time = Input::get("end_reservation_time");
 
-        $datetime = [
-            'start_reservation' => $start_reservation,
-            'end_reservation' => $end_reservation,
-            'start_reservation_date' => $start_reservation_date,
-            'start_reservation_time' => $start_reservation_time,
-            'end_reservation_date' => $end_reservation_date,
-            'end_reservation_time' => $end_reservation_time
-        ];
+            $datetime = [
+                'start_reservation' => $start_reservation,
+                'end_reservation' => $end_reservation,
+                'start_reservation_date' => $start_reservation_date,
+                'start_reservation_time' => $start_reservation_time,
+                'end_reservation_date' => $end_reservation_date,
+                'end_reservation_time' => $end_reservation_time
+            ];
 
-        $vehicle = DB::select("SELECT v.id, v.brand, v.model, v.type
+            $user_id = $ride["user_id"];
+
+            $vehicle = DB::select("SELECT v.id, v.brand, v.model, v.type
                             FROM vehicle AS v
                             LEFT JOIN ride AS r ON r.vehicle_id = v.id
                             WHERE v.id NOT IN
@@ -176,12 +182,32 @@ class ReservationController extends Controller
                             AND r.user_id != '$user_id')
                             GROUP BY v.id");
 
-        if ($vehicle == [])
-        {
-            return view('reservation.edit', compact('datetime'));
+            if ($vehicle == [])
+            {
+                return view('reservation.edit', compact('datetime', 'ride'));
+            }
+            else
+            {
+                return view('reservation.edit', compact('vehicle', 'datetime', 'ride'));
+            }
         }
         else
         {
+            $start_reservation = $ride["start_reservation"];
+            $end_reservation = $ride["end_reservation"];
+
+            list($start_reservation_date, $start_reservation_time) = explode(' ', $start_reservation);
+            list($end_reservation_date, $end_reservation_time) = explode(' ', $end_reservation);
+
+            $datetime = [
+                'start_reservation' => $start_reservation,
+                'end_reservation' => $end_reservation,
+                'start_reservation_date' => $start_reservation_date,
+                'start_reservation_time' => $start_reservation_time,
+                'end_reservation_date' => $end_reservation_date,
+                'end_reservation_time' => $end_reservation_time
+            ];
+
             return view('reservation.edit', compact('vehicle', 'datetime', 'ride'));
         }
     }

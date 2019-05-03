@@ -5,28 +5,32 @@
 @section('content')
 
 <div class="container" id="header-text">
-  <form method="post" action="{{ route('reservation.date') }}">
+  <form method="get" action="{{ route('reservation.edit', $ride->id) }}">
     @csrf
     <div class="form-group row">
       <div class="col">
         <label for="start">Start reservation (date) :</label>
-        <input type="date" class="form-control" name="start_reservation_date" value="@if(isset($datetime)){{$datetime['start_reservation_date']}}@endif" required/>
+        <input type="date" class="form-control" name="start_reservation_date" value="{{$datetime['start_reservation_date']}}" required/>
       </div>
       <div class="col">
         <label for="start">Start reservation (time) :</label>
-        <input type="time" class="form-control" name="start_reservation_time" value="@if(isset($datetime)){{$datetime['start_reservation_time']}}@endif" step="1" required/>
+        <input type="time" class="form-control" name="start_reservation_time" value="{{$datetime['start_reservation_time']}}" step="1" required/>
       </div>
     </div>
     <div class="form-group row">
       <div class="col">
         <label for="start">End reservation (date) :</label>
-        <input type="date" class="form-control" name="end_reservation_date" value="@if(isset($datetime)){{$datetime['end_reservation_date']}}@endif" required/>
+        <input type="date" class="form-control" name="end_reservation_date" value="{{$datetime['end_reservation_date']}}" required/>
       </div>
       <div class="col">
         <label for="start">End reservation (time) :</label>
-        <input type="time" class="form-control" name="end_reservation_time" value="@if(isset($datetime)){{$datetime['end_reservation_time']}}@endif" step="1" required/>
+        <input type="time" class="form-control" name="end_reservation_time" value="{{$datetime['end_reservation_time']}}" step="1" required/>
       </div>
     </div>
+
+    <input type="hidden" class="form-control" name="start_reservation" value="{{$datetime['start_reservation']}}"/>
+    <input type="hidden" class="form-control" name="end_reservation" value="{{$datetime['end_reservation']}}"/>
+
     <button type="submit" class="btn btn-primary">Vérifier</button>
   </form>
   @if(isset($datetime) and isset($vehicle))
@@ -44,18 +48,13 @@
         @endforeach
       </select>
     </div>
-    <div class="form-group">
-      <input type="hidden" class="form-control" name="start_reservation" value="@if(isset($datetime)){{$datetime['start_reservation']}}@endif"/>
-    </div>
-    <div class="form-group">
-      <input type="hidden" class="form-control" name="end_reservation" value="@if(isset($datetime)){{$datetime['end_reservation']}}@endif"/>
-    </div>
-    <div class="form-group">
+   
+      <input type="hidden" class="form-control" name="start_reservation" value="{{$datetime['start_reservation']}}"/>
+      <input type="hidden" class="form-control" name="end_reservation" value="{{$datetime['end_reservation']}}"/>
+  
       <input type="hidden" class="form-control" name="start_date"/>
-    </div>
-    <div class="form-group">
       <input type="hidden" class="form-control" name="end_date"/>
-    </div>
+    
     <button type="submit" class="btn btn-primary">Réserver</button>
   </form>
   @elseif(isset($datetime))
