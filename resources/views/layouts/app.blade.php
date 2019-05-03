@@ -30,12 +30,10 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top">
             <div class="container">
+                
                 <a class="navbar-brand" href="{{ route('home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <a class="navbar-brand" href="{{ route('ranking') }}">
-                    Ranking
-                </a> 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -43,7 +41,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <a class="nav-link" href="{{ route('ranking') }}">
+                            Classement
+                        </a>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -51,19 +51,19 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">Se connecter</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">S'inscrire</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="/reservation">{{ __('Reservation') }}</a>
+                                <a class="nav-link" href="/reservation">Réservations</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('graph') }}">{{ __('Graph') }}</a>
+                                <a class="nav-link" href="{{ route('graph') }}">Graphiques</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -74,7 +74,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        Se déconnecter
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

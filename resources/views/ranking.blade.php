@@ -51,10 +51,10 @@
 
 	<div class="row">
 		<div class="col">	
-			<button onclick="location.href='{{route('ranking', ['rankType' => 'user'])}}'" type="button" class="btn btn-primary btn-lg btn-block">By users</button>
+			<button onclick="location.href='{{route('ranking', ['rankType' => 'user'])}}'" type="button" class="btn btn-primary btn-lg btn-block">Par utilisateurs</button>
 		</div>
 		<div class="col">
-			<button onclick="location.href='{{route('ranking', ['rankType' => 'ride'])}}'" type="button" class="btn btn-secondary btn-lg btn-block">By rides</button>
+			<button onclick="location.href='{{route('ranking', ['rankType' => 'ride'])}}'" type="button" class="btn btn-secondary btn-lg btn-block">Par trajets</button>
 		</div>
 	</div>
 

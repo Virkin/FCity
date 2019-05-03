@@ -5,6 +5,7 @@
 @section('content')
 
 <div class="container" id="header-text">
+  <a class="btn btn-lg btn-primary float-left" href="/reservation" role="button">Retour</a><br><br><br>
   <form method="get" action="{{ route('reservation.edit', $ride->id) }}">
     @csrf
     <div class="form-group row">
@@ -31,7 +32,7 @@
     <input type="hidden" class="form-control" name="start_reservation" value="{{$datetime['start_reservation']}}"/>
     <input type="hidden" class="form-control" name="end_reservation" value="{{$datetime['end_reservation']}}"/>
 
-    <button type="submit" class="btn btn-primary">Vérifier</button>
+    <button type="submit" class="btn btn-lg btn-primary">Vérifier</button>
   </form>
   @if(isset($datetime) and isset($vehicle))
   <form method="post" action="{{ route('reservation.update', $ride->id) }}">
@@ -55,7 +56,7 @@
       <input type="hidden" class="form-control" name="start_date"/>
       <input type="hidden" class="form-control" name="end_date"/>
     
-    <button type="submit" class="btn btn-primary">Réserver</button>
+    <button type="submit" class="btn btn-lg btn-primary">Réserver</button>
   </form>
   @elseif(isset($datetime))
   <div class="alert alert-danger text-center" role="alert">

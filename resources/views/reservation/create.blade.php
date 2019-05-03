@@ -27,7 +27,7 @@
         <input type="time" class="form-control" name="end_reservation_time" value="@if(isset($datetime)){{$datetime['end_reservation_time']}}@endif" step="1" required/>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary">Vérifier</button>
+    <button type="submit" class="btn btn-lg btn-primary">Vérifier</button>
   </form>
   @if(isset($datetime) and isset($vehicle))
   <form method="post" action="{{ route('reservation.store') }}">
@@ -55,7 +55,7 @@
     <div class="form-group">
       <input type="hidden" class="form-control" name="end_date"/>
     </div>
-    <button type="submit" class="btn btn-primary">Réserver</button>
+    <button type="submit" class="btn btn-lg btn-primary">Réserver</button>
   </form>
   @elseif(isset($datetime))
   <div class="alert alert-danger text-center" role="alert">
