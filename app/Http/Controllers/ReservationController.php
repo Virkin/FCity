@@ -20,10 +20,10 @@ class ReservationController extends Controller
         // Get current user
         $user = Auth::user();
 
-        $columns = ['id', 'nickname', 'model', 'brand', 'type', 'start_reservation', 'end_reservation'];
+        $columns = ['id', 'nickname', 'model', 'brand', 'start_reservation', 'end_reservation'];
 
         // Select all ride of all users
-        $ride = DB::select("SELECT r.id, u.nickname, v.model, v.brand, v.type, r.start_reservation, r.end_reservation, r.start_date, r.end_date, r.user_id
+        $ride = DB::select("SELECT r.id, u.nickname, v.model, v.brand, r.start_reservation, r.end_reservation, r.start_date, r.end_date, r.user_id
                             FROM ride AS r
                             JOIN users AS u ON u.id = r.user_id
                             JOIN vehicle AS v ON v.id = r.vehicle_id
@@ -134,9 +134,9 @@ class ReservationController extends Controller
      */
     public function show(Ride $reservation)
     {
-        $columns = ['id', 'nickname', 'model', 'brand', 'type', 'start_reservation', 'end_reservation', 'start_date', 'end_date'];
+        $columns = ['id', 'nickname', 'model', 'brand', 'type', 'numberPlate', 'start_reservation', 'end_reservation', 'start_date', 'end_date'];
 
-        $ride = DB::select("SELECT r.id, u.nickname, v.model, v.brand, v.type, r.start_reservation, r.end_reservation, r.start_date, r.end_date
+        $ride = DB::select("SELECT r.id, u.nickname, v.model, v.brand, v.type, v.numberPlate, r.start_reservation, r.end_reservation, r.start_date, r.end_date
                             FROM ride AS r
                             JOIN users AS u ON u.id = r.user_id
                             JOIN vehicle AS v ON v.id = r.vehicle_id
