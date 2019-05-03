@@ -30,8 +30,9 @@
     <button type="submit" class="btn btn-primary">Vérifier</button>
   </form>
   @if(isset($datetime) and isset($vehicle))
-  <form method="post" action="{{ route('reservation.store') }}">
+  <form method="post" action="{{ route('reservation.update', $ride->id) }}">
     @csrf
+    @method('PUT')
     <div class="form-group">
       <input type="hidden" class="form-control" name="user_id" value="{{ Auth::user()->id }}"/>
     </div>
