@@ -38,12 +38,22 @@ class ReservationController extends Controller
 
     public function date(Request $request)
     {
+        $previous = url()->previous();
+        $previous_url = explode('/', $previous);
+        $previous_route = end($previous_url);
         $start_reservation = request('start_reservation_date') . ' ' . request('start_reservation_time');
         $end_reservation = request('end_reservation_date') . ' ' . request('end_reservation_time');
 
         if ($end_reservation < $start_reservation)
         {
-            return view('reservation.create', compact('datetime'));
+            if ($previous_route == "create")
+            {
+                return view('reservation.create', compact('datetime'));
+            }
+            elseif ($previous_route == "edit")
+            {
+                return view('reservation.edit', compact('datetime'));
+            }
         }
         else
         {
@@ -56,7 +66,7 @@ class ReservationController extends Controller
                 'end_reservation_time' => request('end_reservation_time')
             ];
 
-            $ride = DB::select("SELECT v.id, v.brand, v.model, v.type
+            $vehicle = DB::select("SELECT v.id, v.brand, v.model, v.type
                                 FROM vehicle AS v
                                 LEFT JOIN ride AS r ON r.vehicle_id = v.id
                                 WHERE v.id NOT IN
@@ -65,13 +75,27 @@ class ReservationController extends Controller
                                 WHERE r.start_reservation BETWEEN '$start_reservation' AND '$end_reservation' 
                                 OR '$start_reservation' BETWEEN r.start_reservation AND r.end_reservation)
                                 GROUP BY v.id");
-            if ($ride == [])
+            if ($vehicle == [])
             {
-                return view('reservation.create', compact('datetime'));
+                if ($previous_route == "create")
+                {
+                    return view('reservation.create', compact('datetime'));
+                }
+                elseif ($previous_route == "edit")
+                {
+                    return view('reservation.edit', compact('datetime'));
+                }
             }
             else
             {
-                return view('reservation.create', compact('ride', 'datetime'));
+                if ($previous_route == "create")
+                {
+                    return view('reservation.create', compact('vehicle', 'datetime'));
+                }
+                elseif ($previous_route == "edit")
+                {
+                    return view('reservation.edit', compact('vehicle', 'datetime'));
+                }
             }
         }
     }
@@ -123,7 +147,43 @@ class ReservationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $ride = Ride::find($id);
+
+        $user_id = $ride["user_id"];
+        $start_reservation = $ride["start_reservation"];
+        $end_reservation = $ride["end_reservation"];
+
+        list($start_reservation_date, $start_reservation_time) = explode(' ', $start_reservation);
+        list($end_reservation_date, $end_reservation_time) = explode(' ', $end_reservation);
+
+        $datetime = [
+            'start_reservation' => $start_reservation,
+            'end_reservation' => $end_reservation,
+            'start_reservation_date' => $start_reservation_date,
+            'start_reservation_time' => $start_reservation_time,
+            'end_reservation_date' => $end_reservation_date,
+            'end_reservation_time' => $end_reservation_time
+        ];
+
+        $vehicle = DB::select("SELECT v.id, v.brand, v.model, v.type
+                            FROM vehicle AS v
+                            LEFT JOIN ride AS r ON r.vehicle_id = v.id
+                            WHERE v.id NOT IN
+                            (SELECT r.vehicle_id
+                            FROM ride AS r
+                            WHERE (r.start_reservation BETWEEN '$start_reservation' AND '$end_reservation' 
+                            OR '$start_reservation' BETWEEN r.start_reservation AND r.end_reservation)
+                            AND r.user_id != '$user_id')
+                            GROUP BY v.id");
+
+        if ($vehicle == [])
+        {
+            return view('reservation.edit', compact('datetime'));
+        }
+        else
+        {
+            return view('reservation.edit', compact('vehicle', 'datetime', 'ride'));
+        }
     }
 
     /**
@@ -135,7 +195,17 @@ class ReservationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $ride = Ride::find($id);
+        $ride->update($request->all());
+        $ride->user_id = $request->get('user_id');
+        $ride->vehicle_id = $request->get('vehicle_id');
+        $ride->start_reservation = $request->get('start_reservation');
+        $ride->end_reservation = $request->get('end_reservation');
+        $ride->start_date = $request->get('start_date');
+        $ride->end_date = $request->get('end_date');
+        $ride->save();
+
+        return redirect('/reservation')->with('success', 'Votre trajet à été  mis à jour');
     }
 
     /**
