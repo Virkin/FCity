@@ -158,7 +158,8 @@ class ReservationController extends Controller
 
         $ride = Ride::find($id);
 
-        if ($user->id == $ride->user_id AND $ride->start_date == null AND $ride->end_date == null)
+        if ($user->id == $ride->user_id AND $ride->start_date == null AND $ride->end_date == null AND $ride->start_reservation > date("Y-m-d H:i:s") 
+        AND $ride->end_reservation > date("Y-m-d H:i:s"))
         {
             if (Input::get("start_reservation_date") !== null)
             {
@@ -262,7 +263,7 @@ class ReservationController extends Controller
 
         $ride = Ride::find($id);
 
-        if ($user->id == $ride->user_id AND $ride->start_date == null AND $ride->end_date == null)
+        if ($user->id == $ride->user_id AND $ride->start_date == null AND $ride->end_date == null AND ($ride->start_reservation > date("Y-m-d H:i:s") AND $ride->end_reservation > date("Y-m-d H:i:s")) OR $ride->start_reservation < date("Y-m-d H:i:s") AND $ride->end_reservation < date("Y-m-d H:i:s"))
         {
             $ride->delete();
             return redirect()->route('reservation.index')->with('success','Trajet supprimé correctement');

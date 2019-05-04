@@ -24,9 +24,17 @@
           <td>{{ $r->$name }}</td>
         @endforeach
         <td style="padding:0"><a class="btn btn-lg btn-outline-success btn-block" href="{{ route('reservation.show', $r->id) }}" role="button">Détails</a></td>
-        @if ($user->id === $r->user_id and $r->start_date === null and $r->end_date === null)
-        <td style="padding:0"><a class="btn btn-lg btn-outline-primary btn-block" href="{{ route('reservation.edit', $r->id) }}" role="button">Modifier</a></td>
-        <td style="padding:0"><a class="btn btn-lg btn-outline-danger btn-block" data-toggle="modal" data-target="#confirmationSuppression{{ $r->id }}">Supprimer</a></td>
+        @if ($user->id === $r->user_id and $r->start_date === null and $r->end_date === null and $r->start_reservation > date("Y-m-d H:i:s") and $r->end_reservation > date("Y-m-d H:i:s"))
+          <td style="padding:0"><a class="btn btn-lg btn-outline-primary btn-block" href="{{ route('reservation.edit', $r->id) }}" role="button">Modifier</a></td>
+          <td style="padding:0"><a class="btn btn-lg btn-outline-danger btn-block" data-toggle="modal" data-target="#confirmationSuppression{{ $r->id }}">Supprimer</a></td>
+        @endif
+        @if ($user->id === $r->user_id and $r->start_date === null and $r->end_date === null and $r->start_reservation < date("Y-m-d H:i:s") and $r->end_reservation < date("Y-m-d H:i:s"))
+          <td></td>
+          <td style="padding:0"><a class="btn btn-lg btn-outline-danger btn-block" data-toggle="modal" data-target="#confirmationSuppression{{ $r->id }}">Supprimer</a></td>
+        @endif
+        @if (($user->id != $r->user_id) or ($user->id === $r->user_id and $r->start_date != null or $r->end_date != null))
+          <td></td>
+          <td></td>
         @endif
         <!-- Modal -->
         <div class="modal fade" id="confirmationSuppression{{ $r->id }}" tabindex="-1" role="dialog" aria-labelledby="confirmationSuppressionLabel" aria-hidden="true">
