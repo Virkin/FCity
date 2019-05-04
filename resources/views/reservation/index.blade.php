@@ -50,12 +50,12 @@
                 Voulez-vous supprimer la réservation n°{{ $r->id }} ?
               </div>
               <div class="modal-footer">
-                <button class="btn btn-lg btn-danger btn-block" data-dismiss="modal">Annuler</button>
                 <form action="{{ route('reservation.destroy', $r->id) }}" method="post">
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="btn btn-lg btn-success btn-block" data-toggle="modal" data-target="#confirmationSuppression{{ $r->id }}">Supprimer</button>
+                  <button type="submit" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#confirmationSuppression{{ $r->id }}">Supprimer</button>
                 </form>
+                <button style="margin-top:0" class="btn btn-lg btn-success btn-block" data-dismiss="modal">Annuler</button>
               </div>
             </div>
           </div>
