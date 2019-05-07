@@ -30,12 +30,17 @@ class PagesController extends Controller
 
             if($measure_name == "puiss")
             {
-                $req = "SELECT EXP(SUM(LN(value))) as value, d.added_on as added_on
-                            FROM data as d 
-                            JOIN measure as m ON m.id=d.measure_id 
-                            WHERE ( m.name='Voltage' or m.name='Intensity' ) and d.ride_id='$ride_id' 
-                            GROUP BY d.added_on 
-                            ORDER BY d.added_on ASC";
+                $req = "SELECT
+                        CASE
+                            WHEN MIN(d.value) = 0 THEN 0
+                            ELSE EXP(SUM(LN(ABS(d.value))))
+                        END value,
+                        d.added_on as added_on
+                        FROM data as d 
+                        JOIN measure as m ON m.id=d.measure_id 
+                        WHERE ( m.name='Voltage' or m.name='Intensity' ) and d.ride_id=$ride_id
+                        GROUP BY d.added_on 
+                        ORDER BY d.added_on ASC";
             }
             else
             {

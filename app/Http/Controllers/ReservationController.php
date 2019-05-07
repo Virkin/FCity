@@ -27,7 +27,7 @@ class ReservationController extends Controller
                             FROM ride AS r
                             JOIN users AS u ON u.id = r.user_id
                             JOIN vehicle AS v ON v.id = r.vehicle_id
-                            ORDER BY r.id");
+                            ORDER BY r.start_reservation DESC");
 
         return view('reservation.index', compact('ride', 'columns', 'user'));
     }
