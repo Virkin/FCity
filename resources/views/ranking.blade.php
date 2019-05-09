@@ -11,9 +11,9 @@
 	<table class="table table-striped table-bordered">
     	<thead>
 	      	<tr>
-	        	<th>Rank</th>
-	        	<th>Name</th>
-	        	<th>WH</th>
+	        	<th>Pos</th>
+	        	<th>Nom</th>
+	        	<th>Puissance moyenne</th>
 	      	</tr>
     	</thead>
     	<tbody>
