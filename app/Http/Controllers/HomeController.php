@@ -38,7 +38,7 @@ class HomeController extends Controller
             if($type == "user")
             {
                 $ranking = array();
-                $users = DB::select("SELECT u.id, u.nickname FROM users as u JOIN ride as r on u.id=r.user_id"); 
+                $users = DB::select("SELECT u.id, u.nickname FROM users as u JOIN ride as r on u.id=r.user_id join data as d on d.ride_id=r.id group by u.id"); 
                 
                 foreach ($users as $user) 
                 {
@@ -68,7 +68,7 @@ class HomeController extends Controller
                         {
                             $nextDate = new DateTime($powerPulse->date);
 
-                            $step = ($nextDate->diff($date)->s)/3600;
+                            $step = ($nextDate->getTimestamp() - $date->getTimestamp())/3600;
 
                             $energyPulse += (($powerPulse->value + $power)*($step))/2;
 
@@ -76,10 +76,10 @@ class HomeController extends Controller
                             
                             $date = $nextDate;            
                         }
-
+                        
                         $firstDate = new DateTime($powerGlobal[0]->date);
 
-                        $totalTime = ($date->diff($firstDate)->s)/3600;
+                        $totalTime = ($date->getTimestamp() - $firstDate->getTimestamp())/3600;
 
                         $averagePower = $energyPulse/$totalTime;
 
@@ -107,12 +107,12 @@ class HomeController extends Controller
                 foreach($rides as $ride)
                 {
                     $powerGlobal = DB::select("
-                        SELECT EXP(SUM(LN(value))) as value, d.added_on as date 
-                        FROM data as d 
-                        JOIN measure as m ON m.id=d.measure_id 
-                        WHERE ( m.name='Voltage' or m.name='Intensity' ) and d.ride_id='$ride->id' 
-                        GROUP BY d.added_on 
-                        ORDER BY d.added_on ASC ");
+                            SELECT EXP(SUM(LN(value))) as value, d.added_on as date 
+                            FROM data as d 
+                            JOIN measure as m ON m.id=d.measure_id 
+                            WHERE ( m.name='Voltage' or m.name='Intensity' ) and d.ride_id='$ride->id' 
+                            GROUP BY d.added_on 
+                            ORDER BY d.added_on ASC ");
 
                     $power = $powerGlobal[0]->value;
                     $date = new DateTime($powerGlobal[0]->date);
@@ -123,7 +123,7 @@ class HomeController extends Controller
                     {
                         $nextDate = new DateTime($powerPulse->date);
 
-                        $step = ($nextDate->diff($date)->s)/3600;
+                        $step = ($nextDate->getTimestamp() - $date->getTimestamp())/3600;
 
                         $energyPulse += (($powerPulse->value + $power)*($step))/2;
 
@@ -131,10 +131,10 @@ class HomeController extends Controller
                         
                         $date = $nextDate;            
                     }
-
+                    
                     $firstDate = new DateTime($powerGlobal[0]->date);
 
-                    $totalTime = ($date->diff($firstDate)->s)/3600;
+                    $totalTime = ($date->getTimestamp() - $firstDate->getTimestamp())/3600;
 
                     $averagePower = $energyPulse/$totalTime;
 
