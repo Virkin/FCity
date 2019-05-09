@@ -14,7 +14,9 @@
       </div>
       <div class="col">
         <label for="start">Start reservation (time) :</label>
-        <input type="time" class="form-control" name="start_reservation_time" value="@if(isset($datetime)){{$datetime['start_reservation_time']}}@endif" step="1" required/>
+        <div class="input-group clockpicker" data-autoclose="true">
+          <input type="time" class="form-control" name="start_reservation_time" value="@if(isset($datetime)){{$datetime['start_reservation_time']}}@endif" step="1" required/>
+        </div>
       </div>
     </div>
     <div class="form-group row">
@@ -24,7 +26,9 @@
       </div>
       <div class="col">
         <label for="start">End reservation (time) :</label>
-        <input type="time" class="form-control" name="end_reservation_time" value="@if(isset($datetime)){{$datetime['end_reservation_time']}}@endif" step="1" required/>
+        <div class="input-group clockpicker" data-autoclose="true">
+          <input type="time" class="form-control" name="end_reservation_time" value="@if(isset($datetime)){{$datetime['end_reservation_time']}}@endif" step="1" required/>
+        </div>
       </div>
     </div>
     <button type="submit" class="btn btn-lg btn-primary">Vérifier</button>
@@ -63,5 +67,9 @@
   </div>
   @endif
 </div>
+
+<script type="text/javascript">
+  $('.clockpicker').clockpicker();
+</script>
 
 @endsection

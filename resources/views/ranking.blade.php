@@ -6,47 +6,43 @@
 
 <div class="container" id="header-text">
 
-@if( Request::get('rankType')  == "user")
-	<table class="table table-striped table-bordered">
-    	<thead>
-	      	<tr>
-	        	<th>Rank</th>
-	        	<th>Name</th>
-	        	<th>W/H</th>
-	      	</tr>
-    	</thead>
-    	<tbody>
-	    @php ($i = 0)
-	    @foreach($ranking as $name=>$value)
-			<tr>
-				<td>{{++$i}}</td>
-				<td> {{$name}} </td>
-				<td> {{$value}} </td>
-			</tr>
-         @endforeach
-    	</tbody>
-  	</table>
-@elseif( Request::get('rankType')  == "ride")
+@if( Request::get('rankType') != "")
 
 	<table class="table table-striped table-bordered">
     	<thead>
 	      	<tr>
 	        	<th>Rank</th>
 	        	<th>Name</th>
-	        	<th>W/H</th>
+	        	<th>WH</th>
 	      	</tr>
     	</thead>
     	<tbody>
 	    @php ($i = 0)
+
+	@if( Request::get('rankType')  == "user")
+		
+	    @foreach($ranking as $name=>$value)
+			<tr>
+				<td>{{++$i}}</td>
+				<td> {{$name}} </td>
+				<td> {{$value}} </td>
+			</tr>
+        @endforeach
+        </tbody>
+  		</table>
+	@elseif( Request::get('rankType')  == "ride")
+
 	    @foreach($ranking as $rank)
 			<tr>
 				<td>{{++$i}}</td>
 				<td> {{$rank["nickname"]}} </td>
 				<td> {{$rank["score"]}} </td>
 			</tr>
-         @endforeach
+        @endforeach
     	</tbody>
-  	</table>
+  		</table>
+
+	 @endif
 @else
 
 	<div class="row">
