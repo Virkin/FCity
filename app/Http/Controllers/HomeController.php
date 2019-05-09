@@ -100,7 +100,12 @@ class HomeController extends Controller
             {
                 $ranking = array();
                 
-                $rides = DB::select("SELECT r.id as id, u.nickname as nickname FROM ride as r join data as d on d.ride_id=r.id join users as u on u.id=r.user_id group by r.id");
+                $rides = DB::select("
+                        SELECT r.id as id, u.nickname as nickname
+                        FROM ride as r 
+                        JOIN data as d ON d.ride_id=r.id 
+                        JOIN users as u ON u.id=r.user_id 
+                        GROUP BY r.id");
 
                 $i=0;
 
@@ -138,7 +143,7 @@ class HomeController extends Controller
 
                     $averagePower = $energyPulse/$totalTime;
 
-                    $ranking[$i] = array("nickname"=>$ride->nickname, "score"=>$averagePower);
+                    $ranking[$i] = array("nickname"=>$ride->nickname, "score"=>$averagePower, "id"=>$ride->id);
 
                     $i++;
                 }
