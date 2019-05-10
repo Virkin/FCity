@@ -30,17 +30,10 @@ class PagesController extends Controller
 
             if($measure_name == "puiss")
             {
-                $req = "SELECT
-                        CASE
-                            WHEN MIN(d.value) = 0 THEN 0
-                            ELSE EXP(SUM(LN(ABS(d.value))))
-                        END value,
-                        d.added_on as added_on
-                        FROM data as d 
-                        JOIN measure as m ON m.id=d.measure_id 
-                        WHERE ( m.name='Voltage' or m.name='Intensity' ) and d.ride_id=$ride_id
-                        GROUP BY d.added_on 
-                        ORDER BY d.added_on ASC";
+                $req = "SELECT avg(d1.value*d2.value) as value, d1.added_on
+                            FROM (SELECT value, added_on, ride_id FROM data as d  WHERE d.measure_id=2 and d.ride_id=$ride_id) as d1
+                            JOIN (SELECT value, added_on FROM data as d WHERE d.measure_id=3  and d.ride_id=$ride_id) as d2 ON d2.added_on=d1.added_on
+                            GROUP BY d1.added_on";
             }
             else
             {

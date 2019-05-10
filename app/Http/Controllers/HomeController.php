@@ -51,13 +51,10 @@ class HomeController extends Controller
                     foreach($rides as $ride)
                     {
                         
-                        $powerGlobal = DB::select("
-                            SELECT EXP(SUM(LN(value))) as value, d.added_on as date 
-                            FROM data as d 
-                            JOIN measure as m ON m.id=d.measure_id 
-                            WHERE ( m.name='Voltage' or m.name='Intensity' ) and d.ride_id='$ride->id' 
-                            GROUP BY d.added_on 
-                            ORDER BY d.added_on ASC ");
+                        $powerGlobal = DB::select("SELECT avg(d1.value*d2.value) as value, d1.added_on as date
+                                                    FROM (SELECT value, added_on, ride_id FROM data as d  WHERE d.measure_id=2 and d.ride_id=$ride->id) as d1
+                                                    JOIN (SELECT value, added_on FROM data as d WHERE d.measure_id=3  and d.ride_id=$ride->id) as d2 ON d2.added_on=d1.added_on
+                                                    GROUP BY d1.added_on");
 
                         $power = $powerGlobal[0]->value;
                         $date = new DateTime($powerGlobal[0]->date);
@@ -111,13 +108,10 @@ class HomeController extends Controller
 
                 foreach($rides as $ride)
                 {
-                    $powerGlobal = DB::select("
-                            SELECT EXP(SUM(LN(value))) as value, d.added_on as date 
-                            FROM data as d 
-                            JOIN measure as m ON m.id=d.measure_id 
-                            WHERE ( m.name='Voltage' or m.name='Intensity' ) and d.ride_id='$ride->id' 
-                            GROUP BY d.added_on 
-                            ORDER BY d.added_on ASC ");
+                    $powerGlobal = DB::select("SELECT avg(d1.value*d2.value) as value, d1.added_on as date
+                                                    FROM (SELECT value, added_on, ride_id FROM data as d  WHERE d.measure_id=2 and d.ride_id=$ride->id) as d1
+                                                    JOIN (SELECT value, added_on FROM data as d WHERE d.measure_id=3  and d.ride_id=$ride->id) as d2 ON d2.added_on=d1.added_on
+                                                    GROUP BY d1.added_on");
 
                     $power = $powerGlobal[0]->value;
                     $date = new DateTime($powerGlobal[0]->date);
