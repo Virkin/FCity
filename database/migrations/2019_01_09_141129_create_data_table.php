@@ -23,6 +23,8 @@ class CreateDataTable extends Migration
             $table->foreign('ride_id')->references('id')->on('ride');
             $table->foreign('measure_id')->references('id')->on('measure');
         });
+
+        DB::statement("ALTER TABLE fcity.`data` MODIFY COLUMN added_on TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP(3) NOT NULL");
     }
 
     /**
