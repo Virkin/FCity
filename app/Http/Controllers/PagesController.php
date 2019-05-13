@@ -58,12 +58,11 @@ class PagesController extends Controller
         $xLabel = array();
         
         $i = 1;
-
         $step = 10;
 
         foreach($speedValues as $speedValue)
         {
-            /*if($i < $step)
+            if($i < $step)
             {
                 if($i == $step/2)
                 {
@@ -86,10 +85,11 @@ class PagesController extends Controller
                 array_push($xLabel, $date);
                 array_push($value, $avg);
                 $i=1;
-            }*/
-            array_push($xLabel, $date);
-            array_push($value, $avg);
+            }
         }
+
+        array_push($xLabel, $date);
+        array_push($value, $avg);
 
         $speedChart = app()->chartjs
             ->name('speedChart')
