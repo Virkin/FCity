@@ -190,7 +190,7 @@ class ReservationController extends Controller
                                 FROM ride AS r
                                 WHERE (r.start_reservation BETWEEN '$start_reservation' AND '$end_reservation' 
                                 OR '$start_reservation' BETWEEN r.start_reservation AND r.end_reservation)
-                                AND r.user_id != '$user_id')
+                                AND r.id != '$ride->id')
                                 GROUP BY v.id");
 
                 if ($vehicle == [])
@@ -206,6 +206,8 @@ class ReservationController extends Controller
             {
                 $start_reservation = $ride["start_reservation"];
                 $end_reservation = $ride["end_reservation"];
+
+                $vehicle = "uninitialized";
 
                 list($start_reservation_date, $start_reservation_time) = explode(' ', $start_reservation);
                 list($end_reservation_date, $end_reservation_time) = explode(' ', $end_reservation);

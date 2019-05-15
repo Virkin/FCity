@@ -5,7 +5,7 @@
 <div class="container" id="header-text">
   <a class="btn btn-lg btn-primary float-right" href="/reservation/create" role="button">Créez une nouvelle réservation</a>
   @if (count($ride) > 0)
-  <table class="table table-striped table-bordered">
+  <table class="table table-striped table-bordered ">
     <caption>Liste des réservations</caption>
     <thead>
       <tr>

@@ -22,6 +22,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.1/dist/semantic.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/bootstrap-clockpicker.min.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -44,6 +45,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <a class="nav-link" href="{{ route('ranking') }}">
+                            
                             Classement
                         </a>
                     </ul>
@@ -62,16 +64,23 @@
                             @endif
                         @else
                             <li class="nav-item">
-                                <a class="nav-link" href="/reservation">Réservations</a>
+                                <a class="nav-link" href="/reservation">
+                                    <i class="fas fa-book"></i>
+                                    Réservations
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('graph') }}">Graphiques</a>
+                                <a class="nav-link" href="{{ route('graph') }}">
+                                    <i class="fas fa-chart-area"></i>
+                                    Graphiques
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" target="_blank" href="http://172.31.3.59:3000/d/DP6VyGPmk/fcity2?orgId=1"><img style="height:20px" src="/img/grafana.png"> Grafana</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                     <i class="fas fa-user"></i>
                                     {{ Auth::user()->nickname }} <span class="caret"></span>
                                 </a>
 

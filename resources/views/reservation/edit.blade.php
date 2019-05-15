@@ -38,7 +38,8 @@
 
     <button type="submit" class="btn btn-lg btn-primary">Vérifier</button>
   </form>
-  @if(isset($datetime) and isset($vehicle))
+  @if(isset($vehicle))
+  @if(isset($datetime) and $vehicle != "uninitialized")
   <form method="post" action="{{ route('reservation.update', $ride->id) }}">
     @csrf
     @method('PUT')
@@ -62,7 +63,8 @@
     
     <button type="submit" class="btn btn-lg btn-primary">Réserver</button>
   </form>
-  @elseif(isset($datetime))
+  @endif
+  @else
   <div class="alert alert-danger text-center" role="alert">
     Veuillez choisir un autre créneau, aucune voiture n'est diponible !
   </div>
