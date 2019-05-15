@@ -16,7 +16,7 @@
       <div class="col">
         <label for="start">Start reservation (time) :</label>
         <div class="input-group clockpicker" data-autoclose="true">
-          <input type="time" class="form-control" name="start_reservation_time" value="{{$datetime['start_reservation_time']}}" step="1" required/>
+          <input type="text" class="form-control" name="start_reservation_time" value="{{$datetime['start_reservation_time']}}" step="1" required/>
         </div>
       </div>
     </div>
@@ -28,7 +28,7 @@
       <div class="col">
         <label for="start">End reservation (time) :</label>
         <div class="input-group clockpicker" data-autoclose="true">
-          <input type="time" class="form-control" name="end_reservation_time" value="{{$datetime['end_reservation_time']}}" step="1" required/>
+          <input type="text" class="form-control" name="end_reservation_time" value="{{$datetime['end_reservation_time']}}" step="1" required/>
         </div>
       </div>
     </div>
