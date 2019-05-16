@@ -39,31 +39,31 @@
     <button type="submit" class="btn btn-lg btn-primary">Vérifier</button>
   </form>
   @if(isset($vehicle))
-  @if(isset($datetime) and $vehicle != "uninitialized")
-  <form method="post" action="{{ route('reservation.update', $ride->id) }}">
-    @csrf
-    @method('PUT')
-    <div class="form-group">
-      <input type="hidden" class="form-control" name="user_id" value="{{ Auth::user()->id }}"/>
-    </div>
-    <div class="form-group">
-      <label for="brand">Véhicule :</label>
-      <select class="form-control" name="vehicle_id">
-        @foreach($vehicle as $v)
-          <option value="{{ $v->id }}">{{ $v->brand }} {{ $v->model }} ({{ $v->type }})</option>
-        @endforeach
-      </select>
-    </div>
-   
-      <input type="hidden" class="form-control" name="start_reservation" value="{{$datetime['start_reservation']}}"/>
-      <input type="hidden" class="form-control" name="end_reservation" value="{{$datetime['end_reservation']}}"/>
-  
-      <input type="hidden" class="form-control" name="start_date"/>
-      <input type="hidden" class="form-control" name="end_date"/>
+    @if(isset($datetime) and $vehicle != "uninitialized")
+    <form method="post" action="{{ route('reservation.update', $ride->id) }}">
+      @csrf
+      @method('PUT')
+      <div class="form-group">
+        <input type="hidden" class="form-control" name="user_id" value="{{ Auth::user()->id }}"/>
+      </div>
+      <div class="form-group">
+        <label for="brand">Véhicule :</label>
+        <select class="form-control" name="vehicle_id">
+          @foreach($vehicle as $v)
+            <option value="{{ $v->id }}">{{ $v->brand }} {{ $v->model }} ({{ $v->type }})</option>
+          @endforeach
+        </select>
+      </div>
+     
+        <input type="hidden" class="form-control" name="start_reservation" value="{{$datetime['start_reservation']}}"/>
+        <input type="hidden" class="form-control" name="end_reservation" value="{{$datetime['end_reservation']}}"/>
     
-    <button type="submit" class="btn btn-lg btn-primary">Réserver</button>
-  </form>
-  @endif
+        <input type="hidden" class="form-control" name="start_date"/>
+        <input type="hidden" class="form-control" name="end_date"/>
+      
+      <button type="submit" class="btn btn-lg btn-primary">Réserver</button>
+    </form>
+    @endif
   @else
   <div class="alert alert-danger text-center" role="alert">
     Veuillez choisir un autre créneau, aucune voiture n'est diponible !

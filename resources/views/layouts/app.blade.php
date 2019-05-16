@@ -45,7 +45,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <a class="nav-link" href="{{ route('ranking') }}">
-                            
+                            <i class="fas fa-sort-numeric-down"></i>
                             Classement
                         </a>
                     </ul>

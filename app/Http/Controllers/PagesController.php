@@ -88,9 +88,6 @@ class PagesController extends Controller
             }
         }
 
-        array_push($xLabel, $date);
-        array_push($value, $avg);
-
         $speedChart = app()->chartjs
             ->name('speedChart')
             ->type('line')
@@ -125,8 +122,13 @@ class PagesController extends Controller
                     }
                 }]
             },
+            
             animation: {
                 duration: 0
+            },
+            
+            legend: {
+                display: false
             }
         }");
 

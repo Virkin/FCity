@@ -2,7 +2,50 @@
 
 @section('content')
 
-<header>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  
+  <main role="main">
+
+  <section class="jumbotron text-center" id="header-img">
+    <div class="container" id="header-text">
+      <h1 class="jumbotron-heading">Réservez gratuitement votre voiture électrique dès maintenant</h1>
+      <p class="lead text-muted">L'ISEN Brest met à disposition des enseignants un véhicule 100% électrique connecté pour effectuer des trajets au alentour de Brest.</p>
+      <p>
+        @guest
+          <a class="btn btn-lg btn-primary" href="{{ route('login') }}" role="button">Réservez maintenant</a>
+        @else
+          <a class="btn btn-lg btn-primary" href="/reservation" role="button">Réservez maintenant</a>
+        @endguest
+      </p>
+    </div>
+  </section>
+
+  <div class="container-fluid">
+    <div class="row">
+  
+      <div class="col-12 col-md-6">
+        <h2>Conduire gratuitement un véhicule électrique connecté</h2>
+        <p>Le véhicule FCity est constitué de nombreux capteurs (vitesse, accélération, tension des batteries, luminosité...) afin d'améliorer votre conduite, garantir votre sécurité et réduire votre consommation électrique.</p>
+        <a class="btn btn-lg btn-primary" href="register" role="button">Créez votre compte maintenant</a>
+      </div>
+    
+      <div class="col-12 col-md-4">
+        <h2>Analyser votre conduite en temps réel</h2>
+        <p>Les données recueillies par le véhicule sont transmises vers le serveur de l'ISEN Brest afin que puissiez les analyser et les comparer.</p>
+        <a class="btn btn-lg btn-primary" href="graph" role="button">Visualisez vos données maintenant</a>
+      </div>
+      <div class="col-12 col-md-4">
+        <h2>Participer au classement des meilleurs conducteurs</h2>
+        <p>L'ISEN Brest propose aux enseignants un classement des conducteurs les plus économe en énergie.</p>
+        <a class="btn btn-lg btn-primary" href="#" role="button">Consultez le classement maintenant</a>
+      </div>
+    </div>
+  </div>
+
+  </main>
+
+<!-- <header>
   <div class="ui very padded segment fluid" id="header-img">
     <div class="ui container" id="header-text">
       <h1 class="ui header centered">Réservez gratuitement votre voiture électrique dès maintenant</h2>
@@ -53,7 +96,7 @@
     </div>
   </div>
 </div>
-
+-->
 <!-- <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
