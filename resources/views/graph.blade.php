@@ -15,40 +15,55 @@
 		{{ $currentChartType = ""}}
 	@endif
 
-	<div class="container-fluid" id="header-text">
-		<div class="row">
-			<div class="col-2">
-				<div class="list group list-group-horizontal" id="header-text">
-					
-						<form id="chartForm" method="get" action="{{ route('graph') }}">
-					  		<div class="input-group mb-3">
-						  		<div class="input-group-prepend">
-						    		<label class="input-group-text" for="inputGroupSelect01">Trajet</label>
-						  		</div>
-						  		<select class="custom-select" id="inputGroupSelect01" name="ride" onchange="this.form.submit()">
-						    		@foreach($userRide as $ride)
-						    			<option value="{{$ride->id}}" @if($currentRideId==$ride->id) selected @endif>{{$ride->start_reservation}}</option>
-						    		@endforeach
-						  		</select>
+	<div class="container-fluid" id="header-md-text">
+	
+		<form id="chartForm" method="get" action="{{ route('graph') }}">
+	
+			<div class="row">
 
-					  		</div>
-					  		
-					  		<a href="javascript:;" onclick="setChartType('vit');" style="min-width: 100px;" class="list-group-item list-group-item-action @if($currentChartType == "vit") active @endif">
-							    <center><h3>Vitesse</h3></center>
-							</a>
-							<a href="javascript:;" onclick="setChartType('puiss');" class="list-group-item list-group-item-action @if($currentChartType == "puiss") active @endif"><center><h3>Puissance</h3></center></a>
+			<div class="col-6 col-md-3">
+	  		
+	  		<div class="input-group mb-3">
+		  		<div class="input-group-prepend">
+		    		<label class="input-group-text" for="inputGroupSelect01">Trajet</label>
+		  		</div>
+		  		<select class="custom-select" id="inputGroupSelect01" name="ride" onchange="this.form.submit()">
+		    		@foreach($userRide as $ride)
+		    			<option value="{{$ride->id}}" @if($currentRideId==$ride->id) selected @endif>{{$ride->start_reservation}}</option>
+		    		@endforeach
+		  		</select>
 
-							<input type="hidden" id="chartType" name="chartType" value="{{$currentChartType}}">
+	  		</div>
+	  		</div>
 
-						</form>
-				</div>
+	  		<div class="col-6 col-md-9">
+	  		
+			<ul class="nav nav-tabs">
+				<li class="nav-item">
+
+				</li>	
+			  	<li class="nav-item">
+			    	<a href="javascript:;" onclick="setChartType('vit');" class="nav-link @if($currentChartType == "vit") active @endif">
+			    		<center><h3>Vitesse</h3></center>
+					</a>
+			  	</li>
+			  	<li class="nav-item">
+			    	<a href="javascript:;" onclick="setChartType('puiss');" class="nav-link @if($currentChartType == "puiss") active @endif">
+			    		<center><h3>Puissance</h3></center>
+			    	</a>
+			  </li>
+			</ul>
+
 			</div>
-			<div class="col-12">
-				{!! $speedChart->render() !!}
-			</div>
-		</div>
+			</div>					  		
+
+			<input type="hidden" id="chartType" name="chartType" value="{{$currentChartType}}">
+
+		</form>
+
+		{!! $speedChart->render() !!}	
 	</div>
-
+		
 	<script>
 		function setChartType(type)
 		{
