@@ -76,7 +76,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" target="_blank" href="http://172.31.3.59:3000/d/DP6VyGPmk/fcity2?orgId=1"><img style="height:20px" src="/img/grafana.png"> Grafana</a>
+                                <a class="nav-link" target="_blank" href="http://{{ isset($_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '127.0.0.1' }}:3000/d/DP6VyGPmk/fcity2?orgId=1"><img style="height:20px" src="/img/grafana.png"> Grafana</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
