@@ -21,25 +21,36 @@
     </div>
   </section>
 
-  <div class="container-fluid">
+  <div class="container">
     <div class="row">
   
-      <div class="col-12 col-md-6">
+      <div class="col-md-12 text-center mt-5 mb-5">
         <h2>Conduire gratuitement un véhicule électrique connecté</h2>
         <p>Le véhicule FCity est constitué de nombreux capteurs (vitesse, accélération, tension des batteries, luminosité...) afin d'améliorer votre conduite, garantir votre sécurité et réduire votre consommation électrique.</p>
+        <img class="img-fluid" src="img/gps.png">
+        <br>
+        <br>
         <a class="btn btn-lg btn-primary" href="register" role="button">Créez votre compte maintenant</a>
       </div>
-    
-      <div class="col-12 col-md-4">
+
+      <div class="col-md-12 text-center mt-5 mb-5">
         <h2>Analyser votre conduite en temps réel</h2>
         <p>Les données recueillies par le véhicule sont transmises vers le serveur de l'ISEN Brest afin que puissiez les analyser et les comparer.</p>
+        <img class="img-fluid" src="img/graph.png">
+        <br>
+        <br>
         <a class="btn btn-lg btn-primary" href="graph" role="button">Visualisez vos données maintenant</a>
       </div>
-      <div class="col-12 col-md-4">
+
+      <div class="col-md-12 text-center mt-5 mb-5">
         <h2>Participer au classement des meilleurs conducteurs</h2>
         <p>L'ISEN Brest propose aux enseignants un classement des conducteurs les plus économe en énergie.</p>
-        <a class="btn btn-lg btn-primary" href="#" role="button">Consultez le classement maintenant</a>
+        <img class="img-fluid" src="img/ranking.png">
+        <br>
+        <br>
+        <a class="btn btn-lg btn-primary" href="ranking" role="button">Consultez le classement maintenant</a>
       </div>
+
     </div>
   </div>
 

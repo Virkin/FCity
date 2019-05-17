@@ -24,7 +24,7 @@
 			      	<tr>
 			        	<th>Position</th>
 			        	<th>Utilisateur</th>
-			        	<th>Puissance moyenne</th>
+			        	<th>Puissance moyenne en W</th>
 			      	</tr>
 		    	</thead>
 		    	<tbody>
@@ -44,7 +44,7 @@
 			        	<th>Position</th>
 			        	<th>Identifiant trajet</th>
 			        	<th>Utilisateur</th>
-			        	<th>Puissance moyenne</th>
+			        	<th>Puissance moyenne en W</th>
 			      	</tr>
 		    	</thead>
 		    	<tbody>
