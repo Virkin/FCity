@@ -42,6 +42,14 @@ class PagesController extends Controller
                         GROUP BY d.added_on 
                         ORDER BY d.added_on ASC";
             }
+            else if($measure_name == "lux")
+            {
+                $req = "SELECT avg(value) as value, added_on from data as d join ride as r on d.ride_id=r.id where r.id=$ride_id and ( d.measure_id=4 or d.measure_id=5 ) group by d.added_on";
+            }
+            else if($measure_name =="accel")
+            {
+                $req = "SELECT value, added_on from data as d join ride as r on d.ride_id=r.id where r.id=$ride_id and d.measure_id=6";
+            }
             else
             {
                 $req = "SELECT value, added_on from data as d join ride as r on d.ride_id=r.id where r.id=$ride_id and d.measure_id=1";
@@ -129,6 +137,16 @@ class PagesController extends Controller
             
             legend: {
                 display: false
+            },
+
+            plugins: {
+                zoom: {
+                    zoom: {
+                        enabled: true,
+                        drag: true,
+                        mode: 'x'
+                    }
+                }
             }
         }");
 

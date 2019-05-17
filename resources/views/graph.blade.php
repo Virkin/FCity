@@ -41,12 +41,34 @@
 			<ul class="nav nav-tabs">	
 			  	<li class="nav-item">
 			    	<a href="javascript:;" onclick="setChartType('vit');" class="nav-link @if($currentChartType == "vit") active @endif">
-			    		<center><h3>Vitesse</h3></center>
+			    		<center><h3>
+			    			<i class="fas fa-tachometer-alt"></i>
+			    			Vitesse
+			    		</h3></center>
 					</a>
 			  	</li>
 			  	<li class="nav-item">
 			    	<a href="javascript:;" onclick="setChartType('puiss');" class="nav-link @if($currentChartType == "puiss") active @endif">
-			    		<center><h3>Puissance</h3></center>
+			    		<center><h3>
+			    			<i class="fas fa-bolt"></i>
+			    			Puissance
+			    		</h3></center>
+			    	</a>
+			  </li>
+			  <li class="nav-item">
+			    	<a href="javascript:;" onclick="setChartType('lux');" class="nav-link @if($currentChartType == "lux") active @endif">
+			    		<center><h3>
+			    			<i class="fas fa-sun"></i>
+			    			Eclairement
+			    		</h3></center>
+			    	</a>
+			  </li>
+			  <li class="nav-item">
+			    	<a href="javascript:;" onclick="setChartType('accel');" class="nav-link @if($currentChartType == "accel") active @endif">
+			    		<center><h3>
+			    			<i class="fas fa-wind"></i>
+			    			Acceleration
+			    		</h3></center>
 			    	</a>
 			  </li>
 			</ul>
