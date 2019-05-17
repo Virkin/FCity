@@ -5,10 +5,20 @@
 @section('content')
 
 <div class="container" id="header-text">
-	@if( Request::get('rankType') != "")
-		<a class="btn btn-lg btn-primary float-left" href="/ranking" role="button">Retour</a>
+		<ul class="nav nav-tabs">	
+		  	<li class="nav-item">
+		    	<a href="{{route('ranking', ['rankType' => 'user'])}}" class="nav-link @if( Request::get('rankType')  == "user" or Request::get('rankType') == "") active @endif ">
+		    		<center><h3>Par conducteur</h3></center>
+				</a>
+		  	</li>
+		  	<li class="nav-item">
+		    	<a href="{{route('ranking', ['rankType' => 'ride'])}}" class="nav-link @if( Request::get('rankType')  == "ride") active @endif "> 
+		    		<center><h3>Par trajet</h3></center>
+				</a>
+		  	</li>
+		</ul>
 		@php ($i = 0)
-		@if( Request::get('rankType')  == "user")
+		@if( Request::get('rankType')  == "user" or Request::get('rankType') == "")
 			<table class="table table-striped table-bordered">
 		    	<thead>
 			      	<tr>
@@ -48,17 +58,7 @@
 			        @endforeach
 		    	</tbody>
 	  		</table>
-		 @endif
-	@else
-		<div class="row">
-			<div class="col">	
-				<button onclick="location.href='{{route('ranking', ['rankType' => 'user'])}}'" type="button" class="btn btn-primary btn-lg btn-block">Par utilisateurs</button>
-			</div>
-			<div class="col">
-				<button onclick="location.href='{{route('ranking', ['rankType' => 'ride'])}}'" type="button" class="btn btn-secondary btn-lg btn-block">Par trajets</button>
-			</div>
-		</div>
-	@endif
+		@endif
 </div>
 
 @endsection

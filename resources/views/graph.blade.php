@@ -38,10 +38,7 @@
 
 	  		<div class="col-6 col-md-9">
 	  		
-			<ul class="nav nav-tabs">
-				<li class="nav-item">
-
-				</li>	
+			<ul class="nav nav-tabs">	
 			  	<li class="nav-item">
 			    	<a href="javascript:;" onclick="setChartType('vit');" class="nav-link @if($currentChartType == "vit") active @endif">
 			    		<center><h3>Vitesse</h3></center>
