@@ -5,9 +5,9 @@
 <div class="container" id="header-text">
   <a class="btn btn-lg btn-primary float-right" href="/reservation/create" role="button">Créez une nouvelle réservation</a>
   @if (count($ride) > 0)
-  <table class="table table-striped table-bordered ">
+  <table class="table table-striped table-bordered table-responsive-lg">
     <caption>Liste des réservations</caption>
-    <thead>
+    <thead class="thead-dark">
       <tr>
         @foreach ($columns as $column => $name)
           <th scope="col">{{$name}}</th>

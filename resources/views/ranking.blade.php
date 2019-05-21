@@ -20,7 +20,7 @@
 		@php ($i = 0)
 		@if( Request::get('rankType')  == "user" or Request::get('rankType') == "")
 			<table class="table table-striped table-bordered">
-		    	<thead>
+		    	<thead class="thead-dark">
 			      	<tr>
 			        	<th>Position</th>
 			        	<th>Utilisateur</th>
@@ -39,7 +39,7 @@
 	  		</table>
 		@elseif( Request::get('rankType')  == "ride")
 			<table class="table table-striped table-bordered">
-		    	<thead>
+		    	<thead class="thead-dark">
 			      	<tr>
 			        	<th>Position</th>
 			        	<th>Identifiant trajet</th>
