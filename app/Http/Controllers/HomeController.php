@@ -79,7 +79,7 @@ class HomeController extends Controller
 
                     $totalTime = ($date->getTimestamp() - $firstDate->getTimestamp())/3600;
 
-                    $averagePower = $energyPulse/$totalTime;
+                    $averagePower = round($energyPulse/$totalTime);
 
                     $ranking[$user->nickname] += $averagePower;
 
@@ -138,7 +138,7 @@ class HomeController extends Controller
 
                 $totalTime = ($date->getTimestamp() - $firstDate->getTimestamp())/3600;
 
-                $averagePower = $energyPulse/$totalTime;
+                $averagePower = round($energyPulse/$totalTime);
 
                 $ranking[$i] = array("nickname"=>$ride->nickname, "score"=>$averagePower, "id"=>$ride->id);
 
