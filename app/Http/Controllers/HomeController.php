@@ -79,14 +79,14 @@ class HomeController extends Controller
 
                     $totalTime = ($date->getTimestamp() - $firstDate->getTimestamp())/3600;
 
-                    $averagePower = round($energyPulse/$totalTime);
+                    $averagePower = $energyPulse/$totalTime;
 
                     $ranking[$user->nickname] += $averagePower;
 
                     $i++;
                 }
 
-                $ranking[$user->nickname] = $ranking[$user->nickname]/$i;
+                $ranking[$user->nickname] = round($ranking[$user->nickname]/$i);
             }
 
             asort($ranking);
