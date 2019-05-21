@@ -19,7 +19,7 @@
 		</ul>
 		@php ($i = 0)
 		@if( Request::get('rankType')  == "user" or Request::get('rankType') == "")
-			<table class="table table-striped table-bordered">
+			<table class="table table-striped table-bordered table-responsive-sm">
 		    	<thead class="thead-dark">
 			      	<tr>
 			        	<th>Position</th>
@@ -38,7 +38,7 @@
 	        	</tbody>
 	  		</table>
 		@elseif( Request::get('rankType')  == "ride")
-			<table class="table table-striped table-bordered">
+			<table class="table table-striped table-bordered table-responsive-sm">
 		    	<thead class="thead-dark">
 			      	<tr>
 			        	<th>Position</th>
