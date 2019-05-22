@@ -9,7 +9,7 @@
     <caption>Liste des réservations</caption>
     <thead class="thead-dark">
       <tr>
-        @foreach ($columns as $column => $name)
+        @foreach ($columns_name as $column => $name)
           <th scope="col">{{$name}}</th>
         @endforeach
         <th>Détails</th>

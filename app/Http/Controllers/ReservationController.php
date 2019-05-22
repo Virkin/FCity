@@ -25,6 +25,7 @@ class ReservationController extends Controller
         $user = Auth::user();
 
         $columns = ['id', 'nickname', 'model', 'brand', 'start_reservation', 'end_reservation'];
+        $columns_name = ['Identifiant', 'Pseudonyme', 'Modèle', 'Marque', 'Début réservation', 'Fin réservation'];
 
         // Select all ride of all users
         $ride = DB::select("SELECT r.id, u.nickname, v.model, v.brand, r.start_reservation, r.end_reservation, r.start_date, r.end_date, r.user_id
@@ -33,7 +34,7 @@ class ReservationController extends Controller
                             JOIN vehicle AS v ON v.id = r.vehicle_id
                             ORDER BY r.start_reservation DESC");
 
-        return view('reservation.index', compact('ride', 'columns', 'user'));
+        return view('reservation.index', compact('ride', 'columns', 'columns_name', 'user'));
     }
 
     /**
@@ -139,6 +140,7 @@ class ReservationController extends Controller
     public function show(Ride $reservation)
     {
         $columns = ['id', 'nickname', 'model', 'brand', 'type', 'numberPlate', 'start_reservation', 'end_reservation', 'start_date', 'end_date'];
+        $columns_name = ['Identifiant', 'Pseudonyme', 'Modèle', 'Marque', 'Type', "Plaque d'immatriculation", 'Début réservation', 'Fin réservation', 'Début trajet', 'Fin trajet'];
 
         $ride = DB::select("SELECT r.id, u.nickname, v.model, v.brand, v.type, v.numberPlate, r.start_reservation, r.end_reservation, r.start_date, r.end_date
                             FROM ride AS r
@@ -146,7 +148,7 @@ class ReservationController extends Controller
                             JOIN vehicle AS v ON v.id = r.vehicle_id
                             WHERE r.id = '$reservation->id'");
 
-        return view('reservation.show', compact('ride', 'columns'));
+        return view('reservation.show', compact('ride', 'columns', 'columns_name'));
     }
 
     /**
