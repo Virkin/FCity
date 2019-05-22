@@ -9,11 +9,11 @@
     @csrf
     <div class="form-group row">
       <div class="col">
-        <label for="start">Start reservation (date) :</label>
+        <label for="start">Début réservation (date) :</label>
         <input type="date" class="form-control" name="start_reservation_date" value="@if(isset($datetime)){{$datetime['start_reservation_date']}}@endif" required/>
       </div>
       <div class="col">
-        <label for="start">Start reservation (time) :</label>
+        <label for="start">Début réservation (heure) :</label>
         <div class="input-group clockpicker" data-autoclose="true">
           <input type="text" class="form-control" name="start_reservation_time" value="@if(isset($datetime)){{$datetime['start_reservation_time']}}@endif" step="1" required/>
         </div>
@@ -21,11 +21,11 @@
     </div>
     <div class="form-group row">
       <div class="col">
-        <label for="start">End reservation (date) :</label>
+        <label for="start">Fin réservation (date) :</label>
         <input type="date" class="form-control" name="end_reservation_date" value="@if(isset($datetime)){{$datetime['end_reservation_date']}}@endif" required/>
       </div>
       <div class="col">
-        <label for="start">End reservation (time) :</label>
+        <label for="start">Fin réservation (heure) :</label>
         <div class="input-group clockpicker" data-autoclose="true">
           <input type="text" class="form-control" name="end_reservation_time" value="@if(isset($datetime)){{$datetime['end_reservation_time']}}@endif" step="1" required/>
         </div>
