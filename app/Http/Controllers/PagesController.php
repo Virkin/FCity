@@ -21,7 +21,7 @@ class PagesController extends Controller
 
         $user = Auth::user();
         
-        $userRide = DB::select("SELECT id, start_reservation from ride where user_id=$user->id");
+        $userRide = DB::select("SELECT id, start_reservation from ride where user_id=$user->id ORDER BY start_reservation DESC");
 
         if (Input::get('ride') !== null)
         {
@@ -44,7 +44,7 @@ class PagesController extends Controller
             }
             else if($measure_name == "lux")
             {
-                $req = "SELECT avg(value) as value, added_on from data as d join ride as r on d.ride_id=r.id where r.id=$ride_id and ( d.measure_id=4 or d.measure_id=5 ) group by d.added_on";
+                $req = "SELECT avg(value) as value, added_on from data as d join ride as r on d.ride_id=r.id where r.id=$ride_id and ( d.measure_id=4 or d.measure_id=5 or d.measure_id=7) group by d.added_on";
             }
             else if($measure_name =="accel")
             {
@@ -79,7 +79,7 @@ class PagesController extends Controller
 
                 if(isset($avg))
                 {
-                    $avg = ($avg+$speedValue->value)/2;
+                    $avg = round(($avg+$speedValue->value)/2,2);
                 }
                 else
                 {
