@@ -51,6 +51,15 @@
         <a class="btn btn-lg btn-primary" href="ranking" role="button">Consultez le classement maintenant</a>
       </div>
 
+      <div class="col-md-12 text-center mt-5 mb-5">
+        <h2>Vidéo de démonstration du projet F-City</h2>
+        <p>Vidéo réalisé fin mai 2019 avec les deux équipes du projet F-City et notre référent M. Le Gall</p>
+        <video controls width="100%">
+          <source src="video/demo v3 1080p.mp4" type="video/mp4">
+          Votre navigateur ne peut pas lire la vidéo
+        </video>
+      </div>
+
     </div>
   </div>
 
