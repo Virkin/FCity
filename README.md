@@ -26,7 +26,3 @@
 ## Enable mysql driver
 
 * You might need to comment out the following in your php.ini file : `;extension=pdo_mysql.so`
-
-https://stackoverflow.com/questions/38602321/cloning-laravel-project-from-github
-https://stackoverflow.com/questions/40815984/how-to-install-all-required-php-extenions-for-laravel
-https://stackoverflow.com/questions/42557693/laravel-pdoexception-could-not-find-driver
